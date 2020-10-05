@@ -1,1 +1,7 @@
 Notas del desarrollador
+notas en tabla empresa BD
+* validad numero de telefono no mayor de 12 caracteres
+*validar nit caundo es repetido no permite ingresar
+*validar nit no ingresar vacion
+*validar nombre para queno lo ingresen vacio
+* cuando un campo esta en null, le ingresas un espacio y luego lo borras intentas ingresar si almacena :/
