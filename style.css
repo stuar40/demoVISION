@@ -3650,8 +3650,9 @@ div#sparklinehome canvas {
     width: 100% !important;
 }
 .header-top-area {
-    background: #006DF0;
+    background: #0cd5ac; /*color del banner principal*/
 }
+
 .sidebar-nav .metismenu{
 	background: #fff;
 }
@@ -3722,10 +3723,12 @@ div#sparklinehome canvas {
 .history-anl-icon i {
     background-color: #86bc42;
 }
-.footer-copyright-area {
-    background: #006DF0;
+.footer-copyright-area { /*propiedades del footer donde estan los derechos de autor*/
+    background: #0cd5ac;
 	padding: 20px 0px;
     text-align: center;
+    /*padding-bottom: 70px;*/
+    
 }
 .message-single-top h1, .notification-single-top h1 {
     border-bottom: 1px solid #F6F8FA;
