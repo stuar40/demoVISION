@@ -5,3 +5,17 @@ notas en tabla empresa BD
 *validar nit no ingresar vacion
 *validar nombre para queno lo ingresen vacio
 * cuando un campo esta en null, le ingresas un espacio y luego lo borras intentas ingresar si almacena :/
+
+
+Modulo Empresa
+carga de imagnes tipo mediumblob por que acepta un maximo de 16megas
+blob normal 600k
+
+Agregar a BD campo Departamento 
+Restricciones o validaciones
+
+
+  $servername = "173.255.247.91";
+    $database = "ssolucionesgt_testopticas";
+    $username = "ssolucionesgt_estuardo";
+    $password = "Eddy5795.";

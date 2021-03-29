@@ -1,0 +1,775 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema bdopticass
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema bdopticass
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `bdopticass` DEFAULT CHARACTER SET utf8 ;
+USE `bdopticass` ;
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Empresa`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Empresa` (
+  `idEmpresa` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombreEmpresa` VARCHAR(100) NOT NULL,
+  `descripcionEmpresa` VARCHAR(150) NULL,
+  `logoEmpresa` VARCHAR(150) NULL,
+  `nitEmpresa` INT UNSIGNED NOT NULL,
+  `registroEmpresa` VARCHAR(50) NULL,
+  `monedaEmpresa` VARCHAR(45) NULL,
+  `paisEmpresa` VARCHAR(45) NULL,
+  `sitiowebEmpresa` VARCHAR(200) NULL,
+  PRIMARY KEY (`idEmpresa`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Sucursal`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Sucursal` (
+  `idSucursal` INT NOT NULL AUTO_INCREMENT,
+  `nombreSucursal` VARCHAR(150) NULL,
+  `descripcionSucursal` VARCHAR(150) NULL,
+  `ciudadSucursal` VARCHAR(75) NULL,
+  `direccionSucursal` VARCHAR(150) NULL,
+  `telefonoSucursal` VARCHAR(20) NULL,
+  `correoSucursal` VARCHAR(50) NULL,
+  `horarioSucursal` VARCHAR(100) NULL,
+  `Empresa_idEmpresa` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idSucursal`),
+  INDEX `fk_Sucursal_Empresa1_idx` (`Empresa_idEmpresa` ASC)  ,
+  CONSTRAINT `fk_Sucursal_Empresa1`
+    FOREIGN KEY (`Empresa_idEmpresa`)
+    REFERENCES `bdopticass`.`Empresa` (`idEmpresa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`SueldoEmpleado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`SueldoEmpleado` (
+  `idSueldoEmpleado` INT NOT NULL AUTO_INCREMENT,
+  `SueldoEmpleado` DOUBLE NOT NULL,
+  `descripcionSueldoEmpleado` VARCHAR(75) NULL,
+  `estadoSueldoEmpleado` VARCHAR(45) NULL,
+  PRIMARY KEY (`idSueldoEmpleado`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`ComisionEmpleado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`ComisionEmpleado` (
+  `idComisionEmpleado` INT NOT NULL AUTO_INCREMENT,
+  `ComisionEmpleado` INT NOT NULL,
+  `descripcionComisionEmpleado` VARCHAR(45) NULL,
+  `estadoComisionEmpleado` VARCHAR(25) NULL,
+  PRIMARY KEY (`idComisionEmpleado`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`TipoEmpleado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`TipoEmpleado` (
+  `idTipoEmpleado` INT NOT NULL AUTO_INCREMENT,
+  `rolTipoEmpleado` VARCHAR(45) NULL,
+  `descripcionTipoEmpleado` VARCHAR(75) NULL,
+  PRIMARY KEY (`idTipoEmpleado`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Horario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Horario` (
+  `idHorario` INT NOT NULL AUTO_INCREMENT,
+  `nombreHorario` VARCHAR(45) NOT NULL,
+  `diasHorario` VARCHAR(50) NULL,
+  `tiempoHorario` VARCHAR(50) NULL,
+  PRIMARY KEY (`idHorario`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Usuario` (
+  `idUsuario` INT NOT NULL AUTO_INCREMENT,
+  `fotoUsuario` BLOB NULL,
+  `priNombreUsuario` VARCHAR(50) NOT NULL,
+  `segNombreUsuario` VARCHAR(45) NULL,
+  `priApellidoUsuario` VARCHAR(45) NULL,
+  `segApellidoUsuario` VARCHAR(75) NULL,
+  `identificacionUsuario` INT NOT NULL,
+  `sexoUsuario` VARCHAR(15) NULL,
+  `direccionUsuario` VARCHAR(100) NULL,
+  `telefonoUsuario` VARCHAR(25) NULL,
+  `correoUsuario` VARCHAR(50) NULL,
+  `fechaNacUsuario` DATE NULL,
+  `usuario` VARCHAR(20) NOT NULL,
+  `passUsuario` VARCHAR(150) NOT NULL,
+  `descripcionUsuario` VARCHAR(150) NULL,
+  `estadoUsuario` VARCHAR(15) NULL,
+  `SueldoEmpleado_idSueldoEmpleado` INT NOT NULL,
+  `ComisionEmpleado_idComisionEmpleado` INT NOT NULL,
+  `TipoEmpleado_idTipoEmpleado` INT NOT NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  `Horario_idHorario` INT NOT NULL,
+  PRIMARY KEY (`idUsuario`),
+  INDEX `fk_Usuario_SueldoEmpleado1_idx` (`SueldoEmpleado_idSueldoEmpleado` ASC)  ,
+  INDEX `fk_Usuario_ComisionEmpleado1_idx` (`ComisionEmpleado_idComisionEmpleado` ASC)  ,
+  INDEX `fk_Usuario_TipoEmpleado1_idx` (`TipoEmpleado_idTipoEmpleado` ASC)  ,
+  INDEX `fk_Usuario_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  INDEX `fk_Usuario_Horario1_idx` (`Horario_idHorario` ASC)  ,
+  CONSTRAINT `fk_Usuario_SueldoEmpleado1`
+    FOREIGN KEY (`SueldoEmpleado_idSueldoEmpleado`)
+    REFERENCES `bdopticass`.`SueldoEmpleado` (`idSueldoEmpleado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Usuario_ComisionEmpleado1`
+    FOREIGN KEY (`ComisionEmpleado_idComisionEmpleado`)
+    REFERENCES `bdopticass`.`ComisionEmpleado` (`idComisionEmpleado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Usuario_TipoEmpleado1`
+    FOREIGN KEY (`TipoEmpleado_idTipoEmpleado`)
+    REFERENCES `bdopticass`.`TipoEmpleado` (`idTipoEmpleado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Usuario_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Usuario_Horario1`
+    FOREIGN KEY (`Horario_idHorario`)
+    REFERENCES `bdopticass`.`Horario` (`idHorario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Privilegios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Privilegios` (
+  `idPrivilegios` INT NOT NULL AUTO_INCREMENT,
+  `privilegio` VARCHAR(75) NULL,
+  PRIMARY KEY (`idPrivilegios`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Empleado_Roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Empleado_Roles` (
+  `idEmpleado_Roles` INT NOT NULL AUTO_INCREMENT,
+  `TipoEmpleado_idTipoEmpleado` INT NOT NULL,
+  `Privilegios_idPrivilegios` INT NOT NULL,
+  PRIMARY KEY (`idEmpleado_Roles`),
+  INDEX `fk_Empleado_Roles_TipoEmpleado1_idx` (`TipoEmpleado_idTipoEmpleado` ASC)  ,
+  INDEX `fk_Empleado_Roles_Privilegios1_idx` (`Privilegios_idPrivilegios` ASC)  ,
+  CONSTRAINT `fk_Empleado_Roles_TipoEmpleado1`
+    FOREIGN KEY (`TipoEmpleado_idTipoEmpleado`)
+    REFERENCES `bdopticass`.`TipoEmpleado` (`idTipoEmpleado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Empleado_Roles_Privilegios1`
+    FOREIGN KEY (`Privilegios_idPrivilegios`)
+    REFERENCES `bdopticass`.`Privilegios` (`idPrivilegios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Cliente` (
+  `idCliente` INT NOT NULL AUTO_INCREMENT,
+  `nombreCliente` VARCHAR(150) NULL,
+  `apellidoCliente` VARCHAR(150) NULL,
+  `nitCliente` INT NOT NULL,
+  `telefonoCliente` VARCHAR(20) NULL,
+  `correoCliente` VARCHAR(50) NULL,
+  `direccionCliente` VARCHAR(100) NULL,
+  `sexoCliente` VARCHAR(15) NULL,
+  `estadoCliente` VARCHAR(15) NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idCliente`),
+  INDEX `fk_Cliente_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  CONSTRAINT `fk_Cliente_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`HistorialClinico`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`HistorialClinico` (
+  `idHistorialClinico` INT NOT NULL AUTO_INCREMENT,
+  `noHistorial` INT NULL,
+  `fechaHistorial` DATE NULL,
+  `motivoconsultaHistorial` VARCHAR(200) NULL,
+  `antecedentesHistorial` VARCHAR(150) NULL,
+  `familiarHistorial` VARCHAR(150) NULL,
+  `medicosHistorial` VARCHAR(150) NULL,
+  `alergicosHistorial` VARCHAR(150) NULL,
+  `quirurjicosHistorial` VARCHAR(150) NULL,
+  `avODHistorial` VARCHAR(45) NULL,
+  `avOIHistorial` VARCHAR(45) NULL,
+  `rxactualODHistorial` VARCHAR(45) NULL,
+  `rxactualOIHistorial` VARCHAR(45) NULL,
+  `avcorreccionODHistorial` VARCHAR(45) NULL,
+  `avcorreccionOIHistorial` VARCHAR(45) NULL,
+  `retinoscopiaODHistorial` VARCHAR(45) NULL,
+  `retinoscopiaOIHistorial` VARCHAR(45) NULL,
+  `dipHistorial` VARCHAR(45) NULL,
+  `rxfinalODHistorial` VARCHAR(45) NULL,
+  `rxfinalOIHistorial` VARCHAR(45) NULL,
+  `adicionHistorial` VARCHAR(45) NULL,
+  `alturaHistorial` VARCHAR(45) NULL,
+  `lenterecHistorial` VARCHAR(200) NULL,
+  `bioparpadosHistorial` VARCHAR(100) NULL,
+  `biopestaniasHistorial` VARCHAR(100) NULL,
+  `biocorneaHistorial` VARCHAR(100) NULL,
+  `biocristalinoHistorial` VARCHAR(100) NULL,
+  `bioconjuntivaHistorial` VARCHAR(100) NULL,
+  `biootrosHistorial` VARCHAR(150) NULL,
+  `descripcionHistorial` VARCHAR(200) NULL,
+  `Cliente_idCliente` INT NOT NULL,
+  PRIMARY KEY (`idHistorialClinico`),
+  INDEX `fk_HistorialClinico_Cliente1_idx` (`Cliente_idCliente` ASC)  ,
+  CONSTRAINT `fk_HistorialClinico_Cliente1`
+    FOREIGN KEY (`Cliente_idCliente`)
+    REFERENCES `bdopticass`.`Cliente` (`idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Proveedor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Proveedor` (
+  `idProveedor` INT NOT NULL AUTO_INCREMENT,
+  `nombreProveedor` VARCHAR(150) NULL,
+  `razonProveedor` VARCHAR(150) NULL,
+  `nitProveedor` VARCHAR(45) NULL,
+  `direccionProveedor` VARCHAR(75) NULL,
+  `ciudadProveedor` VARCHAR(75) NULL,
+  `paisProveedor` VARCHAR(75) NULL,
+  `correoProveedor` VARCHAR(75) NULL,
+  `telefonoProveedor` VARCHAR(25) NULL,
+  `telefono2Proveedor` VARCHAR(25) NULL,
+  `descripcionProveedor` VARCHAR(150) NULL,
+  `Empresa_idEmpresa` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idProveedor`),
+  INDEX `fk_Proveedor_Empresa1_idx` (`Empresa_idEmpresa` ASC)  ,
+  CONSTRAINT `fk_Proveedor_Empresa1`
+    FOREIGN KEY (`Empresa_idEmpresa`)
+    REFERENCES `bdopticass`.`Empresa` (`idEmpresa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Asesor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Asesor` (
+  `idAsesor` INT NOT NULL AUTO_INCREMENT,
+  `nombreAsesor` VARCHAR(150) NULL,
+  `telefonoAsesor` VARCHAR(25) NULL,
+  `correoAsesor` VARCHAR(75) NULL,
+  `descripcionAsesor` VARCHAR(150) NULL,
+  `estadoAsesor` VARCHAR(15) NULL,
+  `Proveedor_idProveedor` INT NOT NULL,
+  PRIMARY KEY (`idAsesor`),
+  INDEX `fk_Asesor_Proveedor1_idx` (`Proveedor_idProveedor` ASC)  ,
+  CONSTRAINT `fk_Asesor_Proveedor1`
+    FOREIGN KEY (`Proveedor_idProveedor`)
+    REFERENCES `bdopticass`.`Proveedor` (`idProveedor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Categoria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Categoria` (
+  `idCategoria` INT NOT NULL AUTO_INCREMENT,
+  `nombreCategoria` VARCHAR(150) NOT NULL,
+  PRIMARY KEY (`idCategoria`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Producto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Producto` (
+  `idProducto` INT NOT NULL AUTO_INCREMENT,
+  `skuProducto` VARCHAR(150) NULL,
+  `nombreProducto` VARCHAR(150) NULL,
+  `tipoProducto` VARCHAR(75) NULL,
+  `descripcionProducto` VARCHAR(150) NULL,
+  `marcaProducto` VARCHAR(75) NULL,
+  `imagenProducto` BLOB NULL,
+  `presentacionProducto` VARCHAR(75) NULL,
+  `estadoProducto` VARCHAR(15) NULL,
+  `Categoria_idCategoria` INT NOT NULL,
+  PRIMARY KEY (`idProducto`),
+  INDEX `fk_Producto_Categoria1_idx` (`Categoria_idCategoria` ASC)  ,
+  CONSTRAINT `fk_Producto_Categoria1`
+    FOREIGN KEY (`Categoria_idCategoria`)
+    REFERENCES `bdopticass`.`Categoria` (`idCategoria`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Compras`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Compras` (
+  `idCompras` INT NOT NULL AUTO_INCREMENT,
+  `noDocumentoCompra` VARCHAR(75) NULL,
+  `fechaCompra` DATE NULL,
+  `Subtotal` DOUBLE NULL,
+  `impuestosCompra` DOUBLE NULL,
+  `totalCompra` DOUBLE NULL,
+  `estadoCompra` VARCHAR(45) NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  `Proveedor_idProveedor` INT NOT NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  PRIMARY KEY (`idCompras`),
+  INDEX `fk_Compras_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  INDEX `fk_Compras_Proveedor1_idx` (`Proveedor_idProveedor` ASC)  ,
+  INDEX `fk_Compras_Usuario1_idx` (`Usuario_idUsuario` ASC)  ,
+  CONSTRAINT `fk_Compras_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Compras_Proveedor1`
+    FOREIGN KEY (`Proveedor_idProveedor`)
+    REFERENCES `bdopticass`.`Proveedor` (`idProveedor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Compras_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `bdopticass`.`Usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`DetalleCompra`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`DetalleCompra` (
+  `idDetalleCompra` INT NOT NULL AUTO_INCREMENT,
+  `precioCompraDetalle` DOUBLE NULL,
+  `cantidadCompra` DOUBLE NULL,
+  `subtotalCompraDetalle` DOUBLE NULL,
+  `estadoDetalle` VARCHAR(15) NULL,
+  `Compras_idCompras` INT NOT NULL,
+  PRIMARY KEY (`idDetalleCompra`),
+  INDEX `fk_DetalleCompra_Compras1_idx` (`Compras_idCompras` ASC)  ,
+  CONSTRAINT `fk_DetalleCompra_Compras1`
+    FOREIGN KEY (`Compras_idCompras`)
+    REFERENCES `bdopticass`.`Compras` (`idCompras`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Stock`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Stock` (
+  `idStock` INT NOT NULL AUTO_INCREMENT,
+  `fechaStock` DATE NULL,
+  `stockFactura` DOUBLE NULL,
+  `stockVenta` DOUBLE NULL,
+  `precio Minimo` DOUBLE NULL,
+  `precioVenta` DOUBLE NULL,
+  `precioPromo` DOUBLE NULL,
+  `estadoStock` VARCHAR(25) NULL,
+  `Producto_idProducto` INT NOT NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  `DetalleCompra_idDetalleCompra` INT NULL,
+  PRIMARY KEY (`idStock`),
+  INDEX `fk_Stock_Producto1_idx` (`Producto_idProducto` ASC)  ,
+  INDEX `fk_Stock_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  INDEX `fk_Stock_DetalleCompra1_idx` (`DetalleCompra_idDetalleCompra` ASC)  ,
+  CONSTRAINT `fk_Stock_Producto1`
+    FOREIGN KEY (`Producto_idProducto`)
+    REFERENCES `bdopticass`.`Producto` (`idProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Stock_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Stock_DetalleCompra1`
+    FOREIGN KEY (`DetalleCompra_idDetalleCompra`)
+    REFERENCES `bdopticass`.`DetalleCompra` (`idDetalleCompra`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`TipoPago`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`TipoPago` (
+  `idTipoPago` INT NOT NULL AUTO_INCREMENT,
+  `TipoPago` VARCHAR(75) NULL,
+  PRIMARY KEY (`idTipoPago`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Venta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Venta` (
+  `idVenta` INT NOT NULL AUTO_INCREMENT,
+  `noDocumentoVenta` VARCHAR(75) NULL,
+  `fechaVenta` DATE NULL,
+  `subtotalVenta` DOUBLE NULL,
+  `impuestosVenta` DOUBLE NULL,
+  `totalVenta` DOUBLE NULL,
+  `estadoVenta` VARCHAR(25) NULL,
+  `obserVenta` VARCHAR(150) NULL,
+  `TipoPago_idTipoPago` INT NOT NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  `Cliente_idCliente` INT NOT NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  PRIMARY KEY (`idVenta`),
+  INDEX `fk_Venta_TipoPago1_idx` (`TipoPago_idTipoPago` ASC)  ,
+  INDEX `fk_Venta_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  INDEX `fk_Venta_Cliente1_idx` (`Cliente_idCliente` ASC)  ,
+  INDEX `fk_Venta_Usuario1_idx` (`Usuario_idUsuario` ASC)  ,
+  CONSTRAINT `fk_Venta_TipoPago1`
+    FOREIGN KEY (`TipoPago_idTipoPago`)
+    REFERENCES `bdopticass`.`TipoPago` (`idTipoPago`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Venta_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Venta_Cliente1`
+    FOREIGN KEY (`Cliente_idCliente`)
+    REFERENCES `bdopticass`.`Cliente` (`idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Venta_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `bdopticass`.`Usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`DetalleVenta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`DetalleVenta` (
+  `idDetalleVenta` INT NOT NULL AUTO_INCREMENT,
+  `cantidadDetalle` DOUBLE NOT NULL,
+  `precioDetalle` DOUBLE NULL,
+  `impuestosDetalle` DOUBLE NULL,
+  `subtotalDetalle` DOUBLE NOT NULL,
+  `estadoDetalle` VARCHAR(45) NULL,
+  `Stock_idStock` INT NOT NULL,
+  `Venta_idVenta` INT NOT NULL,
+  PRIMARY KEY (`idDetalleVenta`),
+  INDEX `fk_DetalleVenta_Stock1_idx` (`Stock_idStock` ASC)  ,
+  INDEX `fk_DetalleVenta_Venta1_idx` (`Venta_idVenta` ASC)  ,
+  CONSTRAINT `fk_DetalleVenta_Stock1`
+    FOREIGN KEY (`Stock_idStock`)
+    REFERENCES `bdopticass`.`Stock` (`idStock`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DetalleVenta_Venta1`
+    FOREIGN KEY (`Venta_idVenta`)
+    REFERENCES `bdopticass`.`Venta` (`idVenta`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Egresos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Egresos` (
+  `idEgreso` INT NOT NULL AUTO_INCREMENT,
+  `fechaEgreso` DATE NULL,
+  `montoEgreso` DOUBLE NULL,
+  `descripcionEgreso` VARCHAR(150) NULL,
+  `estadoEgreso` VARCHAR(25) NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idEgreso`),
+  INDEX `fk_Egresos_Usuario1_idx` (`Usuario_idUsuario` ASC)  ,
+  INDEX `fk_Egresos_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  CONSTRAINT `fk_Egresos_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `bdopticass`.`Usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Egresos_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Ingresos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Ingresos` (
+  `idIngreso` INT NOT NULL AUTO_INCREMENT,
+  `fechaIngreso` DATE NULL,
+  `montoIngreso` DOUBLE NULL,
+  `descripcionIngreso` VARCHAR(150) NULL,
+  `estadoIngreso` VARCHAR(25) NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idIngreso`),
+  INDEX `fk_Ingresos_Usuario1_idx` (`Usuario_idUsuario` ASC)  ,
+  INDEX `fk_Ingresos_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  CONSTRAINT `fk_Ingresos_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `bdopticass`.`Usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Ingresos_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Credito`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Credito` (
+  `idCredito` INT NOT NULL AUTO_INCREMENT,
+  `NoDocumentoCredito` VARCHAR(45) NULL,
+  `fechaCredito` DATE NULL,
+  `saldoCredito` DOUBLE NOT NULL,
+  `numpagosCredito` INT NULL,
+  `fechaFinCredito` DATE NULL,
+  `Venta_idVenta` INT NOT NULL,
+  PRIMARY KEY (`idCredito`),
+  INDEX `fk_Credito_Venta1_idx` (`Venta_idVenta` ASC)  ,
+  CONSTRAINT `fk_Credito_Venta1`
+    FOREIGN KEY (`Venta_idVenta`)
+    REFERENCES `bdopticass`.`Venta` (`idVenta`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Pagos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Pagos` (
+  `idPagos` INT NOT NULL AUTO_INCREMENT,
+  `ticketPagos` VARCHAR(45) NULL,
+  `fechaPagos` DATE NULL,
+  `totalPagos` DOUBLE NOT NULL,
+  `Credito_idCredito` INT NOT NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  PRIMARY KEY (`idPagos`),
+  INDEX `fk_Pagos_Credito1_idx` (`Credito_idCredito` ASC)  ,
+  INDEX `fk_Pagos_Usuario1_idx` (`Usuario_idUsuario` ASC)  ,
+  CONSTRAINT `fk_Pagos_Credito1`
+    FOREIGN KEY (`Credito_idCredito`)
+    REFERENCES `bdopticass`.`Credito` (`idCredito`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Pagos_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `bdopticass`.`Usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Trabajos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Trabajos` (
+  `idTrabajo` INT NOT NULL AUTO_INCREMENT,
+  `noDocumentoTrabajo` VARCHAR(45) NULL,
+  `fechaTrabajo` DATE NULL,
+  `fechafinTrabajo` DATE NULL,
+  `descripcionTrabajo` VARCHAR(150) NULL,
+  `costoTrabajo` DOUBLE NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  `Venta_idVenta` INT NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idTrabajo`),
+  INDEX `fk_Trabajos_Usuario1_idx` (`Usuario_idUsuario` ASC)  ,
+  INDEX `fk_Trabajos_Venta1_idx` (`Venta_idVenta` ASC)  ,
+  INDEX `fk_Trabajos_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  CONSTRAINT `fk_Trabajos_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `bdopticass`.`Usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Trabajos_Venta1`
+    FOREIGN KEY (`Venta_idVenta`)
+    REFERENCES `bdopticass`.`Venta` (`idVenta`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Trabajos_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`EstadoTrabajo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`EstadoTrabajo` (
+  `idEstadoTrabajo` INT NOT NULL AUTO_INCREMENT,
+  `fechaEstado` DATE NULL,
+  `EstadoTrabajo` VARCHAR(25) NULL,
+  `descripcionEstado` VARCHAR(125) NULL,
+  `Trabajos_idTrabajo` INT NOT NULL,
+  PRIMARY KEY (`idEstadoTrabajo`),
+  INDEX `fk_EstadoTrabajo_Trabajos1_idx` (`Trabajos_idTrabajo` ASC)  ,
+  CONSTRAINT `fk_EstadoTrabajo_Trabajos1`
+    FOREIGN KEY (`Trabajos_idTrabajo`)
+    REFERENCES `bdopticass`.`Trabajos` (`idTrabajo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Log`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Log` (
+  `idLog` INT NOT NULL AUTO_INCREMENT,
+  `FehaLog` DATETIME NULL,
+  `Log` VARCHAR(150) NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idLog`),
+  INDEX `fk_Log_Usuario1_idx` (`Usuario_idUsuario` ASC)  ,
+  INDEX `fk_Log_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  CONSTRAINT `fk_Log_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `bdopticass`.`Usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Log_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Traslado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Traslado` (
+  `idTraslado` INT NOT NULL AUTO_INCREMENT,
+  `noDocumentoTraslado` VARCHAR(45) NOT NULL,
+  `fechaTraslado` DATE NULL,
+  `sucursal_Sale` VARCHAR(45) NULL,
+  `sucursal_Entra` VARCHAR(45) NULL,
+  `observacionTraslado` VARCHAR(150) NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  PRIMARY KEY (`idTraslado`),
+  INDEX `fk_Traslado_Usuario1_idx` (`Usuario_idUsuario` ASC)  ,
+  CONSTRAINT `fk_Traslado_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `bdopticass`.`Usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`DetalleTraslado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`DetalleTraslado` (
+  `idDetalleTraslado` INT NOT NULL AUTO_INCREMENT,
+  `cantidadDeTraslado` DOUBLE NULL,
+  `Stock_idStock` INT NOT NULL,
+  `Traslado_idTraslado` INT NOT NULL,
+  PRIMARY KEY (`idDetalleTraslado`),
+  INDEX `fk_DetalleTraslado_Stock1_idx` (`Stock_idStock` ASC)  ,
+  INDEX `fk_DetalleTraslado_Traslado1_idx` (`Traslado_idTraslado` ASC)  ,
+  CONSTRAINT `fk_DetalleTraslado_Stock1`
+    FOREIGN KEY (`Stock_idStock`)
+    REFERENCES `bdopticass`.`Stock` (`idStock`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DetalleTraslado_Traslado1`
+    FOREIGN KEY (`Traslado_idTraslado`)
+    REFERENCES `bdopticass`.`Traslado` (`idTraslado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdopticass`.`Kardex`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdopticass`.`Kardex` (
+  `idKardex` INT NOT NULL AUTO_INCREMENT,
+  `fechaKardex` DATETIME NULL,
+  `documentoKardex` VARCHAR(45) NULL,
+  `detalleKardex` VARCHAR(75) NULL,
+  `movimiento` VARCHAR(75) NULL,
+  `cantidadCompra` DOUBLE NULL,
+  `precioCompra` DOUBLE NULL,
+  `totalCompra` DOUBLE NULL,
+  `cantidadVenta` DOUBLE NULL,
+  `precioVenta` DOUBLE NULL,
+  `totalVenta` DOUBLE NULL,
+  `existencia` DOUBLE NULL,
+  `Sucursal_idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idKardex`),
+  INDEX `fk_Kardex_Sucursal1_idx` (`Sucursal_idSucursal` ASC)  ,
+  CONSTRAINT `fk_Kardex_Sucursal1`
+    FOREIGN KEY (`Sucursal_idSucursal`)
+    REFERENCES `bdopticass`.`Sucursal` (`idSucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
