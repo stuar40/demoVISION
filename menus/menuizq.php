@@ -153,6 +153,8 @@
                             <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
                                 <li><a title="Notifications" href="empresa.php"><span class="mini-sub-pro">Empresa</span></a></li>
                                 <li><a title="Alerts" href="2sucursales.php"><span class="mini-sub-pro">Sucursal</span></a></li>
+                                <li><a title="Modals" href="3TipoEmpleado.php"><span class="mini-sub-pro">Mantenimiento Empleado</span></a></li>
+                                <li><a title="Modals" href=""><span class="mini-sub-pro">Mantenimiento Sueldos</span></a></li>
                                 <li><a title="Modals" href=""><span class="mini-sub-pro">Mantenimiento</span></a></li>
                               
                             </ul>

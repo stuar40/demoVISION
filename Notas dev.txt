@@ -19,3 +19,9 @@ Restricciones o validaciones
     $database = "ssolucionesgt_testopticas";
     $username = "ssolucionesgt_estuardo";
     $password = "Eddy5795.";
+
+
+
+    MODULO TIPO EMPLEADO 
+    Agregar opcion Activar y desactivar TIpo de Empleado y PRivilegio
+    ERROR al consular tildes desde base de datos o caracteres como ñÑ,
