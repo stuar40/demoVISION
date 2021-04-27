@@ -25,3 +25,9 @@ Restricciones o validaciones
     MODULO TIPO EMPLEADO 
     Agregar opcion Activar y desactivar TIpo de Empleado y PRivilegio
     ERROR al consular tildes desde base de datos o caracteres como ñÑ,
+
+
+    MODULO NUEVO USUARIO 
+      -
+      -
+      -

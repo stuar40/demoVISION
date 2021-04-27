@@ -72,8 +72,8 @@
                         <li>
                             <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-department icon-wrap"></span> <span class="mini-click-non">Usuario</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="Departments List" href="#"><span class="mini-sub-pro">Ver Usuarios</span></a></li>
-                                <li><a title="Add Departments" href="#"><span class="mini-sub-pro">Nuevo Usuario</span></a></li>
+                                <li><a title="Departments List" href="5VerUsuario.php"><span class="mini-sub-pro">Ver Usuarios</span></a></li>
+                                <li><a title="Add Departments" href="5NuevoUsuario.php"><span class="mini-sub-pro">Nuevo Usuario</span></a></li>
                                 <li><a title="Edit Departments" href="#"><span class="mini-sub-pro">Mantenimiento</span></a></li>
                             </ul>
                         </li>
