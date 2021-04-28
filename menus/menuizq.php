@@ -80,7 +80,7 @@
                         <li>
                             <a class="has-arrow" href="mailbox.html" aria-expanded="false"><span class="educate-icon educate-message icon-wrap"></span> <span class="mini-click-non">Proveedores</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="Inbox" href="#"><span class="mini-sub-pro">>Ver Proveedores</span></a></li>
+                                <li><a title="Inbox" href="6Proveedores.php"><span class="mini-sub-pro">Ver Proveedores</span></a></li>
                                 <li><a title="View Mail" href="#"><span class="mini-sub-pro">Nuevo Proveedor</span></a></li>
                                 <li><a title="Compose Mail" href="#"><span class="mini-sub-pro">Nuevo Asesor</span></a></li>
                                 <li><a title="Compose Mail" href="#"><span class="mini-sub-pro">Mantenimiento</span></a></li>
