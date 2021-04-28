@@ -28,6 +28,10 @@ Restricciones o validaciones
 
 
     MODULO NUEVO USUARIO 
+      -Validar Formulariio
       -
       -
-      -
+
+
+      MODULO NUEVO Proveedor
+      Validar Formulariio modal de proveedro
