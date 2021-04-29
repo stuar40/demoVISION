@@ -64,7 +64,7 @@
                         <li>
                             <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-library icon-wrap"></span> <span class="mini-click-non">Compras</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Library" href="#"><span class="mini-sub-pro">Nueva Compra</span></a></li>
+                                <li><a title="All Library" href="7Compras.php"><span class="mini-sub-pro">Nueva Compra</span></a></li>
                                 <li><a title="Add Library" href="#"><span class="mini-sub-pro">Ver Compras</span></a></li>
                                 <li><a title="Edit Library" href="#"><span class="mini-sub-pro">Anular Compra</span></a></li>
                             </ul>
