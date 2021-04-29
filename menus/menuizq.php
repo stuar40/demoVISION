@@ -26,8 +26,8 @@
                         <li>
                             <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Productos</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Professors"    href="#"><span class="mini-sub-pro">Lista de Productos</span></a></li>
-                                <li><a title="Add Professor"     href="#"><span class="mini-sub-pro">Nuevo Producto</span></a></li>
+                                <li><a title="All Professors"    href="8Productos.php"><span class="mini-sub-pro">Lista de Productos</span></a></li>
+                                <li><a title="Add Professor"     href="8Productos.php"><span class="mini-sub-pro">Nuevo Producto</span></a></li>
                                 <li><a title="Add Professor"     href="#"><span class="mini-sub-pro">Servicios</span></a></li>
                                 <li><a title="Edit Professor"    href="#"><span class="mini-sub-pro">Editar Producto</span></a></li>
                                 <li><a title="Professor Profile" href="#"><span class="mini-sub-pro">Mantenimiento</span></a></li>
