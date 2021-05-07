@@ -1,41 +1,70 @@
 <?php    
-include("config/testconexion.php");
 
-
-   session_start();
+// PARTE 2
+//   include("config/testconexion.php");
+//   include("login/login.php"); ///////s
+//   if(isset($_SESSION['login_user_sys'])){
+//     //echo '<script type="text/javascript">window.location.href="principal.php";</script>';
+//     //header("location: ./principal.php");
+//     echo $_SESSION['login_user_sys'];
+//     echo "si entro";
+//     }
+// PARTE 1
+  
+  //  session_start();
    
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
+  //  if($_SERVER["REQUEST_METHOD"] == "POST") {
+     
+  //     $myusername = $_POST['username'];
+  //     $mypassword = $_POST['password']; 
       
-      //$myusername = mysqli_real_escape_string($conexionbd,$_POST['username']);
-      //$mypassword = mysqli_real_escape_string($conexionbd,$_POST['password']); 
-      $myusername = $_POST['username'];
-      $mypassword = $_POST['password']; 
+  //     $sql = "SELECT idUsuario FROM usuario WHERE usuario = '$myusername' and passUsuario = '$mypassword'";
+  //     $result = mysqli_query($conexionbd,$sql);
+  //     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+     
       
-      $sql = "SELECT idUsuario FROM usuario WHERE usuario = '$myusername' and passUsuario = '$mypassword'";
-      $result = mysqli_query($conexionbd,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-      //$active = $row['active'];
+  //     echo "prueba2";
+  //     $count = mysqli_num_rows($result);
       
-      $count = mysqli_num_rows($result);
-      
-      // If result matched $myusername and $mypassword, table row must be 1 row
+  //     // If result matched $myusername and $mypassword, table row must be 1 row
 		
-      if($count == 1) {
-        // session_register("myusername");
-         $_SESSION['login_user'] = $myusername;
-         
-         header("location: principal.php");
-      }else {
-         $error = "Your Login Name or Password is invalid";
-      }
-   }
+  //     if($count == 1) {
+     
+  //        $_SESSION['login_user'] = $myusername;
+  //        echo "prueba4";
+  //        header("location: principal.php");
+  //     }else {
+  //        $error = "Your Login Name or Password is invalid";
+  //        echo $error ;
+  //     }
+  //  }
+ 
+  // PARTE 3 SIKE
 
+  require_once("config/db.php");
+    // include the configs / constants for the database connection
+    require_once("config/testconexion.php");
+
+    // load the login class
+    require_once("login/login.php");
+
+    // create a login object. when this object is created, it will do all login/logout stuff automatically
+    // so this single line handles the entire login process. in consequence, you can simply ...
+    $login = new Login();
+
+    // ... ask if we are logged in here:
+    if ($login->isUserLoggedIn() == true) {
+        // the user is logged in. you can do whatever you want here.
+        // for demonstration purposes, we simply show the "you are logged in" view.
+    include("login/session.php");
+
+    } else {
+  
 
 ?>
 
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -126,15 +155,15 @@ include("config/testconexion.php");
 										            <input type="checkbox" class="i-checks"> Recordarme </label>
                                 
                             </div>
-                            
-                            <button type = "submit" class="btn btn-success btn-block loginbtn">Login</button>
+                            <input type="text" name="action" id="action" value="login" style="visibility:hidden;"> 
+                            <button name="login" id="login" type = "submit" class="btn btn-success btn-block loginbtn">Login</button>
                             
                         </form>
                     </div>
                 </div>
 			</div>
 			<div class="text-center login-footer">
-				<p>Copyright © 2020. <a href="#">SSolucionesgt.com</a></p>
+				<p>Copyright © 2021. <a href="#">SSolucionesgt.com</a></p>
 			</div>
 		</div>   
     </div>
@@ -189,3 +218,9 @@ include("config/testconexion.php");
 </body>
 
 </html>
+
+<?php
+}
+
+
+?>

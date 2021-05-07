@@ -1,5 +1,5 @@
 <?php
-   include('login/session.php');
+   //include('login/session.php');
    include('menus/menuizq.php');
    include("config/testconexion.php");
    

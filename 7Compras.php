@@ -1,7 +1,9 @@
 <?php
-   include('login/session.php');
-   include('menus/menuizq.php');
+   //include('login/session.php');
+   session_start();
    include("config/testconexion.php");
+   include('menus/menuizq.php');
+  
    
 
 
@@ -147,24 +149,42 @@
                                                                   <div class="col-lg-6">
                                                                       <div class="form-group-inner">
                                                                           <label>Sucursal</label><br>
-                                                                          <input type="text" name="nombreProveedor" id="nombreProveedor"  class="form-control form__input" required
-                                                                          placeholder="Sucursal Actual"
-                                                                          data-msg="Ingrese Codigo del Producto."
-                                                                          minlength="1" maxlength="150"
-                                                                          data-error-class="u-has-error"
-                                                                          data-success-class="u-has-success">  <!-- se asignan identificadores y detalles al campo de texto de la direccion comercial del proveedor -->  
+                                                                          <select name="nombreSucursal" id="nombreSucursal" class="form-control" required>
+                                                                           <?php
+                                                                           $sql= "SELECT idSucursal,nombreSucursal FROM  sucursal";
+                                                                           $res=mysqli_query($conexionbd,$sql);
+                                                                           while ($data=mysqli_fetch_row($res))
+                                                                                   {
+                                                                                       $dato0 = $data[0];
+                                                                                       $dato1 = $data[1];
+                                                                                      
+                                                                           ?>
+                                                                                       <option value="<?php echo $dato0; ?>"> <?php echo $dato1; ?>  </option>
+                                                                           <?php 	} ?>
+                                                                           </select> <!-- se asignan identificadores y detalles al campo de texto de la descripcion del proveedor -->
+                                                                          
                                                                       </div>
                                                                   </div>
                                                                   
                                                                   <div class="col-lg-6">
                                                                       <div class="form-group-inner">
                                                                           <label >Usuario</label><br>
-                                                                          <input type="text" name="nombreProveedor" id="nombreProveedor"  class="form-control form__input" required
-                                                                          placeholder="Usuario del Sistema"
-                                                                          data-msg="Ingrese Codigo del Producto."
-                                                                          minlength="1" maxlength="150"
-                                                                          data-error-class="u-has-error"
-                                                                          data-success-class="u-has-success">  <!-- se asignan identificadores y detalles al campo de texto de la direccion comercial del proveedor -->  
+                                                                          <select name="nombreUsuario" id="nombreUsuario" class="form-control" required>
+                                                                           <?php
+                                                                           $sql= "SELECT idUsuario,priNombreUsuario,priApellidoUsuario FROM  usuario";
+                                                                           $res=mysqli_query($conexionbd,$sql);
+                                                                           while ($data=mysqli_fetch_row($res))
+                                                                                   {
+                                                                                       $dato0 = $data[0];
+                                                                                       $dato1 = $data[1];
+                                                                                       $dato2 = $data[2];
+                                                                                      
+                                                                           ?>
+                                                                                       <option value="<?php echo $dato0; ?>"> <?php echo $dato1; ?> <?php echo $dato2; ?>  </option>
+                                                                           <?php 	} ?>
+                                                                           </select> 
+
+                                                                          
                                                                           
                                                                       </div>
                                                                   </div>
@@ -176,8 +196,8 @@
                                                                   <div class="col-lg-8">
                                                                       <div class="form-group-inner">
                                                                           <label>Buscar Producto</label><br>
-                                                                          <input  type="hidden" name="idProveedor" id="idProveedor" disabled > <!-- se asignan identificadores -->
-                                                                          <input type="text" name="nombreProveedor" id="nombreProveedor"  class="form-control form__input" required
+                                                                          
+                                                                          <input type="text" name="nombreProductoBuscar" id="nombreProductoBuscar"  class="form-control form__input" required
                                                                           placeholder="INGRESE CODIGO DEL PRODUCTO"
                                                                           data-msg="Ingrese Codigo del Producto."
                                                                           minlength="1" maxlength="150"
@@ -189,7 +209,60 @@
                                                                   <div class="col-lg-4">
                                                                       <div class="form-group-inner">
                                                                           <label >Agregar Articulos</label><br>
-                                                                          <button type='input' class='pull-left btn btn-custon-rounded-three btn-success' name ="editarProveedor"id="editarProveedor">+ Agregrar Articulos</button>  <!-- se asignan identificadores y detalles al campo de texto de la descripcion del proveedor -->
+                                                                          <button type='input' class='pull-left btn btn-custon-rounded-three btn-success' name ="agregarArticuloNuevo"id="agregarArticuloNuevo">+ Agregrar Articulos</button>  <!-- se asignan identificadores y detalles al campo de texto de la descripcion del proveedor -->
+                                                                          
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <br>
+
+                                                              <hr />
+                                                              <div class="row">
+                                                                  <div class="col-lg-2">
+                                                                      <div class="form-group-inner">
+                                                                          <label>Cod Producto</label><br>
+                                                                          <input  type="hidden" name="idProductoCompra" id="idProductoCompra" disabled > <!-- se asignan identificadores -->
+                                                                          <input type="text" name="codidoProductoCompra" id="codidoProductoCompra"  class="form-control " required
+                                                                          placeholder="Codigo Producto"
+                                                                          
+                                                                          data-success-class="u-has-success">  <!-- se asignan identificadores y detalles al campo de texto de la direccion comercial del proveedor -->  
+                                                                      </div>
+                                                                  </div>
+                                                                  
+                                                                  <div class="col-lg-3">
+                                                                      <div class="form-group-inner">
+                                                                          <label class="text-center" >Nombre Articulo</label><br>
+                                                                          <input class="form-control btnCosto" type="text" name="nombreProductoCompra" id="nombreProductoCompra" placeholder="Nombre Producto">
+                                                                          
+                                                                      </div>
+                                                                  </div>
+                                                                  
+                                                                  <div class="col-lg-1">
+                                                                      <div class="form-group-inner">
+                                                                          <label class="text-center">Cantidad</label><br>
+                                                                          <input class="form-control " type="text" value="1" name="cantidadProductoCompra" id="cantidadProductoCompra">
+                                                                          
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="col-lg-1">
+                                                                      <div class="form-group-inner">
+                                                                          <label class="text-center">Precio</label><br>
+                                                                          <input class="form-control " type="text" value="0" name="costoProductoCompra" id="costoProductoCompra">
+                                                                          
+                                                                      </div>
+                                                                  </div>
+                                                                  
+                                                                  <div class="col-lg-1">
+                                                                      <div class="form-group-inner">
+                                                                          <label class="text-center" >SubTotal</label><br>
+                                                                          <input class="form-control btnCosto" type="text" value="0" name="subTotalProductoCompra" id="subTotalProductoCompra">
+                                                                          
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="col-lg-2">
+                                                                      <div class="form-group-inner">
+                                                                          <label class="text-center" >Agregar a la factura</label><br>
+                                                                          <button type='input' class='pull-left btn btn-custon-rounded-three btn-success' name ="addDetalleFactura"id="addDetalleFactura">+ Agregrar</button>
                                                                           
                                                                       </div>
                                                                   </div>
@@ -213,17 +286,24 @@
                                                 <thead >
                                                     <tr class="bgcolor btn-facebook">									
                                                         <th class="text-center">Codigo</th>
-                                                        <th class="text-center">Producto</th>
-                                                        <th class="text-center">Cantidad</th>
-                                                        <th class="text-center">Precio</th>
+                                                        <th class="text-center" >Producto</th>
+                                                        <th class="text-center" >Cantidad</th>
+                                                        <th  class="text-center" >Precio</th>
                                                         <th class="text-center">Subtotal</th>
                                                         <th class="text-center">Acciones</th>
                                                       </tr>
+                                                      
+                                                     
                                                 </thead>
                                                 
-                                                <tbody>
-                                                 
+                                                <tbody id="detalle_Compra">
+                                                          <!-- Contenido Generado automaticament por ajax Agregar detallle -->
+                                                           
                                                 </tbody>
+                                                <tfoot id="detalle_Totales">
+                                                <!-- Contendio generado automaticamente por ajax agregar detall -->
+                                                 
+                                                  </tfoot>
                                               </table>
                                                         </div>
                                                     </div>
@@ -247,12 +327,12 @@
                                     
                                     <div class="panel panel-success" id="panel-cobro">
                                         <div class=" modal-header header-color-modal bg-color-2 panel-heading">
-                                          <h6 class="panel-title"></h6><h1 id="big_total" class="modal-header header-color-modal bg-color-2 text-center text-black">TOTAL Q 23.20</h1>
+                                          <h6 class="panel-title"></h6><h1 id="big_total"  name ="big_total" class="modal-header header-color-modal bg-color-2 text-center text-black">TOTAL Q 23.20</h1>
                                         </div>
 
                                         <div class="panel-body">
                                             <!-- Checkout Form -->
-                                            <form class="form-horizontal" method="post" id="form_modalProveedor" name="form_modalProveedor">
+                                            <form class="form-horizontal" method="post" id="form_DetallesEncabezado" name="form_DetallesEncabezado">
                                                     <!-- Step Form Header -->
                                                 
                                                     <!-- End Step Form Header -->
@@ -272,17 +352,17 @@
                                                                                         <div class="form-group-inner">
                                                                                             <label >Proveedor</label>
                                                                                               <div class="input-group custom-go-button">
-                                                                                                <select name="id_sueldoUsuario" id="id_sueldoUsuario" class="form-control" required>
+                                                                                                <select name="id_Proveedor" id="id_Proveedor" class="form-control" required>
                                                                                                 <?php
-                                                                                                $sql= "SELECT idSueldoEmpleado, descripcionSueldoEmpleado, SueldoEmpleado FROM  sueldoempleado where estadoSueldoEmpleado ='ACTIVO'";
+                                                                                                $sql= "SELECT idProveedor,nombreProveedor FROM  proveedor";
                                                                                                 $res=mysqli_query($conexionbd,$sql);
                                                                                                 while ($data=mysqli_fetch_row($res))
                                                                                                         {
                                                                                                             $dato1 = $data[0];
                                                                                                             $dato2 = $data[1];
-                                                                                                            $dato3 = $data[2];
+                                                                                                           
                                                                                                 ?>
-                                                                                                            <option value="<?php echo $dato1; ?>"> <?php echo $dato2; ?> Q. <?php echo $dato3; ?> </option>
+                                                                                                            <option value="<?php echo $dato1; ?>"> <?php echo $dato2; ?>  </option>
                                                                                                 <?php 	} ?>
                                                                                                 </select> <!-- se asignan identificadores y detalles al campo de texto de la descripcion del proveedor -->
                                                                                                 <span class="input-group-btn"><button type="button" name ="nuevoProveedor"id="nuevoProveedor" class="btn btn-success">Nuevo</button></span>
@@ -300,19 +380,12 @@
                                                                                     <div class="col-lg-6">
                                                                                         <div class="form-group-inner">
                                                                                                 <label>Tipo Doc</label>
-                                                                                                <select name="id_sueldoUsuario" id="id_sueldoUsuario" class="form-control" required>
+                                                                                                <select name="tipoDocCompra" id="tipoDocCompra" class="form-control" required>
                                                                                                 
-                                                                                                <?php
-                                                                                                $sql= "SELECT idSueldoEmpleado, descripcionSueldoEmpleado, SueldoEmpleado FROM  sueldoempleado where estadoSueldoEmpleado ='ACTIVO'";
-                                                                                                $res=mysqli_query($conexionbd,$sql);
-                                                                                                while ($data=mysqli_fetch_row($res))
-                                                                                                        {
-                                                                                                            $dato1 = $data[0];
-                                                                                                            $dato2 = $data[1];
-                                                                                                            $dato3 = $data[2];
-                                                                                                ?>
-                                                                                                            <option value="<?php echo $dato1; ?>"> <?php echo $dato2; ?> Q. <?php echo $dato3; ?> </option>
-                                                                                                <?php 	} ?>
+                                                                                                            <option value="FACTURA"> FACTURA </option>
+                                                                                                            <option value="TIKET"> TIKET </option>
+                                                                                                            <option value="RECIBO"> RECIBO </option>
+                                                                                               
                                                                                                 </select> <!-- se asignan identificadores y detalles al campo de texto de la descripcion del proveedor -->
                                                                                         </div>
                                                                                     </div>
@@ -321,7 +394,7 @@
                                                                                               <label >Fecha</label> <!-- etiqueta del campo de texto  donde se ingresa la direccion comercial del proveedor -->
                                                                                                   <span class="text-danger">*</span>
                                                                                                  
-                                                                                                      <input name="nacimientoUsuario" id="nacimientoUsuario" type="date" class="form-control " placeholder="Fecha de Nacimiento "  required >
+                                                                                                      <input name="fechaCompra" id="fechaCompra" type="date" class="form-control " placeholder="Fecha de Nacimiento "  required >
                                                                                                   
                                                                                         </div>  
                                                                                     </div>
@@ -334,27 +407,20 @@
                                                                                                 <label>Forma de Pago</label>
                                                                                                 <select name="id_sueldoUsuario" id="id_sueldoUsuario" class="form-control" required>
                                                                                                 
-                                                                                                <?php
-                                                                                                $sql= "SELECT idSueldoEmpleado, descripcionSueldoEmpleado, SueldoEmpleado FROM  sueldoempleado where estadoSueldoEmpleado ='ACTIVO'";
-                                                                                                $res=mysqli_query($conexionbd,$sql);
-                                                                                                while ($data=mysqli_fetch_row($res))
-                                                                                                        {
-                                                                                                            $dato1 = $data[0];
-                                                                                                            $dato2 = $data[1];
-                                                                                                            $dato3 = $data[2];
-                                                                                                ?>
-                                                                                                            <option value="<?php echo $dato1; ?>"> <?php echo $dato2; ?> Q. <?php echo $dato3; ?> </option>
-                                                                                                <?php 	} ?>
+                                                                                                            <option value="CONTADO"> CONTADO </option>
+                                                                                                            <option value="CREDITO"> CREDITO </option>
+                                                                                                            
+                                                                                               
                                                                                                 </select> <!-- se asignan identificadores y detalles al campo de texto de la descripcion del proveedor -->
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-lg-6">
                                                                                         <div class="form-group-inner">
                                                                                                 <label>No. Comprobante</label>
-                                                                                                <input type="text" name="ciudadProveedor" id="ciudadProveedor"  class="form-control form__input" 
-                                                                                                placeholder="Ingrese la ciudad comercial del proveedor"
-                                                                                                data-msg="Por favor ingrese la ciudad"
-                                                                                                title="ciudad del Proveedor"
+                                                                                                <input type="text" name="noComprobanteCompra" id="noComprobanteCompra"  class="form-control form__input" 
+                                                                                                placeholder="#0001"
+                                                                                                data-msg="No. Comprobante"
+                                                                                                title="Comprobante"
                                                                                                 minlength="1" maxlength="150"
                                                                                                 data-error-class="u-has-error"
                                                                                                 data-success-class="u-has-success">
@@ -415,7 +481,7 @@
        <!-- ========== LLama a ventanas Modales ========== -->
         <?php
             //  include("modal/modalprueba.php") ; // modal que permite Guardar el usuario
-             include("modal/modal6Proveedores.php") ;// modal que permite Guardar el usuario
+             include("modal/modal7Compras.php") ;// modal que permite Guardar el usuario
         ?>
 
     </div>
@@ -424,7 +490,7 @@
      <!-- Aqui se llaman a los archivos jquery con la funcion ready para poder ejecutar los archivos ajax  -->
     <!-- <script src="js/vendor/jquery-1.12.4.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="jq/6Proveedores.js">  </script> 
+    <script type="text/javascript" src="jq/7Compras.js">  </script> 
  
     <!-- bootstrap JS
 		============================================ -->
@@ -496,6 +562,10 @@
     <!-- tawk chat JS
 		============================================ -->
     <script src="js/tawk-chat.js"></script>
+    <!-- touchspin JS
+		============================================ -->
+    <script src="js/touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="js/touchspin/touchspin-active.js"></script>
     
 <!-- data table JS
 		============================================ -->

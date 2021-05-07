@@ -1,5 +1,10 @@
 <?php
-   include('login/session.php');
+    session_start();
+    //include('login/session.php');
+    echo $_SESSION['user_login_status'];
+    echo $_SESSION['user_id'];
+    echo $_SESSION['username'];
+
    include('menus/menuizq.php');
    //include('menus/menusup.php');
 ?>
@@ -44,9 +49,7 @@
     <!-- educate icon CSS
 		============================================ -->
     <link rel="stylesheet" href="css/educate-custon-icon.css">
-    <!-- morrisjs CSS
-		============================================ -->
-    <link rel="stylesheet" href="css/morrisjs/morris.css">
+    
     <!-- mCustomScrollbar CSS
 		============================================ -->
     <link rel="stylesheet" href="css/scrollbar/jquery.mCustomScrollbar.min.css">
@@ -98,15 +101,155 @@
            
            <!-- Mobile Menu end -->
         </div>
-       
+        <div class="widget-program-box mg-tb-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="hpanel widget-int-shape responsive-mg-b-30">
+                            <div class="panel-body">
+                                <div class="text-center content-box">
+                                    <h2 class="m-b-xs"> USUARIOS: <?php echo $_SESSION['username']; ?> aqui</h2>
+                                    <p class="font-bold text-success">Registro de Usuario</p>
+                                    <div class="m icon-box">
+                                        <i class="educate-icon educate-star-half"></i>
+                                    </div>
+                                    <p class="small mg-t-box">
+                                        Usted podra registrar usuarios para el uso del Sistema
+                                    </p>
+                                    <button class="btn btn-success widget-btn-1 btn-sm" onclick="window.location.href='5VerUsuario.php'">ir a Usuario</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="hpanel widget-int-shape responsive-mg-b-30">
+                            <div class="panel-body">
+                                <div class="text-center content-box">
+                                    <h2 class="m-b-xs">PROVEEDORES</h2>
+                                    <p class="font-bold text-info">Mantenimiento Proveedores</p>
+                                    <div class="m icon-box">
+                                        <i class="educate-icon educate-miscellanous"></i>
+                                    </div>
+                                    <p class="small mg-t-box">
+                                        Podra ver y registrar a sus proveedores principales dentro de la empresa
+                                    </p>
+                                    <button class="btn btn-info widget-btn-2 btn-sm" onclick="window.location.href='6Proveedores.php'">ir a Proveedores</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="hpanel widget-int-shape responsive-mg-b-30 res-tablet-mg-t-30 dk-res-t-pro-30">
+                            <div class="panel-body">
+                                <div class="text-center content-box">
+                                    <h2 class="m-b-xs">PRODUCTOS</h2>
+                                    <p class="font-bold text-warning">Inventario</p>
+                                    <div class="m icon-box">
+                                        <i class="educate-icon educate-interface"></i>
+                                    </div>
+                                    <p class="small mg-t-box">
+                                        Mantenimiento de productos que maneja la empresa en el sistema
+                                    </p>
+                                    <button class="btn btn-warning widget-btn-3 btn-sm"onclick="window.location.href='8Productos.php'">ir a Productos</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="hpanel widget-int-shape res-tablet-mg-t-30 dk-res-t-pro-30">
+                            <div class="panel-body">
+                                <div class="text-center content-box">
+                                    <h2 class="m-b-xs">COMPRAS</h2>
+                                    <p class="font-bold text-danger" >Compra de Productos</p>
+                                    <div class="m icon-box">
+                                        <i class="educate-icon educate-charts"></i>
+                                    </div>
+                                    <p class="small mg-t-box">
+                                        Ingresar productos al inventario de la empresa
+                                    </p>
+                                    <button class="btn btn-danger widget-btn-4 btn-sm" onclick="window.location.href='7Compras.php'">ir a Compras</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-program-bg">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="hpanel shadow-inner hbggreen bg-1 responsive-mg-b-30">
+                            <div class="panel-body">
+                                <div class="text-center content-bg-pro">
+                                    <h3>Ventas del dia</h3>
+                                    <p class="text-big font-light">
+                                        5,000
+                                    </p>
+                                    <small>
+												Ventas diarias
+											</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="hpanel shadow-inner hbgblue bg-2 responsive-mg-b-30">
+                            <div class="panel-body">
+                                <div class="text-center content-bg-pro">
+                                    <h3>Venta Mensual</h3>
+                                    <p class="text-big font-light">
+                                        30,000
+                                    </p>
+                                    <small>
+												Estadistica Mensual
+											</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="hpanel shadow-inner hbgyellow bg-3 responsive-mg-b-30 res-tablet-mg-t-30 dk-res-t-pro-30">
+                            <div class="panel-body">
+                                <div class="text-center content-bg-pro">
+                                    <h3>Usuario</h3>
+                                    <p class="text-big font-light">
+                                        Begama
+                                    </p>
+                                    <small>
+												Usuario actual del Sistema
+											</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="hpanel shadow-inner hbgred bg-4 res-tablet-mg-t-30 dk-res-t-pro-30">
+                            <div class="panel-body">
+                                <div class="text-center content-bg-pro">
+                                    <h3>Sucursal</h3>
+                                    <p class="text-big font-light">
+                                        MacroVision San Pedro
+                                    </p>
+                                    <small>
+												Sucursal actual del Sistema
+											</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="analytics-sparkle-area">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="analytics-sparkle-line reso-mg-b-30">
                             <div class="analytics-content">
-                                <h5>Computer Technologies</h5>
-                                <h2>$<span class="counter">5000</span> <span class="tuition-fees">Tuition Fees</span></h2>
+                                <h5>Ventas hoy</h5>
+                                <h2>Q<span class="counter">5000</span> <span class="tuition-fees">Toda la Tienda</span></h2>
                                 <span class="text-success">20%</span>
                                 <div class="progress m-b-0">
                                     <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:20%;"> <span class="sr-only">20% Complete</span> </div>
@@ -117,8 +260,8 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="analytics-sparkle-line reso-mg-b-30">
                             <div class="analytics-content">
-                                <h5>Accounting Technologies</h5>
-                                <h2>$<span class="counter">3000</span> <span class="tuition-fees">Tuition Fees</span></h2>
+                                <h5>Ventas del Mes Actual</h5>
+                                <h2>Q<span class="counter">30,000</span> <span class="tuition-fees">Sucursal</span></h2>
                                 <span class="text-danger">30%</span>
                                 <div class="progress m-b-0">
                                     <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:30%;"> <span class="sr-only">230% Complete</span> </div>
@@ -129,11 +272,11 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="analytics-sparkle-line reso-mg-b-30 table-mg-t-pro dk-res-t-pro-30">
                             <div class="analytics-content">
-                                <h5>Electrical Engineering</h5>
-                                <h2>$<span class="counter">2000</span> <span class="tuition-fees">Tuition Fees</span></h2>
-                                <span class="text-info">60%</span>
+                                <h5>Tus Ventas del mes Begama</h5>
+                                <h2>$<span class="counter">2000</span> <span class="tuition-fees">En Tienda</span></h2>
+                                <span class="text-info">10%</span>
                                 <div class="progress m-b-0">
-                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:60%;"> <span class="sr-only">20% Complete</span> </div>
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:10%;"> <span class="sr-only">10% Complete</span> </div>
                                 </div>
                             </div>
                         </div>
@@ -141,8 +284,8 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                         <div class="analytics-sparkle-line table-mg-t-pro dk-res-t-pro-30">
                             <div class="analytics-content">
-                                <h5>Chemical Engineering</h5>
-                                <h2>$<span class="counter">3500</span> <span class="tuition-fees">Tuition Fees</span></h2>
+                                <h5>Meta de Sucursal</h5>
+                                <h2>Q<span class="counter">75,000</span> <span class="tuition-fees">Meta Mensual</span></h2>
                                 <span class="text-inverse">80%</span>
                                 <div class="progress m-b-0">
                                     <div class="progress-bar progress-bar-inverse" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:80%;"> <span class="sr-only">230% Complete</span> </div>
@@ -203,252 +346,14 @@
         </div>
         <!-- Fin Bloque html -->
        <!-- Inicio Bloque Html  perfil angela dominic facebook--> 
-       <div class="library-book-area mg-t-30">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <div class="single-cards-item">
-                            <div class="single-product-image">
-                                <a href="#"><img src="img/product/profile-bg.jpg" alt=""></a>
-                            </div>
-                            <div class="single-product-text">
-                                <img src="img/product/pro4.jpg" alt="">
-                                <h4><a class="cards-hd-dn" href="#">Angela Dominic</a></h4>
-                                <h5>Web Designer & Developer</h5>
-                                <p class="ctn-cards">Lorem ipsum dolor sit amet, this is a consectetur adipisicing elit</p>
-                                <a class="follow-cards" href="#">Follow</a>
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                        <div class="cards-dtn">
-                                            <h3><span class="counter">199</span></h3>
-                                            <p>Articles</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                        <div class="cards-dtn">
-                                            <h3><span class="counter">599</span></h3>
-                                            <p>Like</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                        <div class="cards-dtn">
-                                            <h3><span class="counter">399</span></h3>
-                                            <p>Comment</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <div class="single-review-st-item res-mg-t-30 table-mg-t-pro-n">
-                            <div class="single-review-st-hd">
-                                <h2>Reviews</h2>
-                            </div>
-                            <div class="single-review-st-text">
-                                <img src="img/notification/1.jpg" alt="">
-                                <div class="review-ctn-hf">
-                                    <h3>Sarah Graves</h3>
-                                    <p>Highly recommend</p>
-                                </div>
-                                <div class="review-item-rating">
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star-half"></i>
-                                </div>
-                            </div>
-                            <div class="single-review-st-text">
-                                <img src="img/notification/2.jpg" alt="">
-                                <div class="review-ctn-hf">
-                                    <h3>Garbease sha</h3>
-                                    <p>Awesome Pro</p>
-                                </div>
-                                <div class="review-item-rating">
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star-half"></i>
-                                </div>
-                            </div>
-                            <div class="single-review-st-text">
-                                <img src="img/notification/3.jpg" alt="">
-                                <div class="review-ctn-hf">
-                                    <h3>Gobetro pro</h3>
-                                    <p>Great Website</p>
-                                </div>
-                                <div class="review-item-rating">
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star-half"></i>
-                                </div>
-                            </div>
-                            <div class="single-review-st-text">
-                                <img src="img/notification/4.jpg" alt="">
-                                <div class="review-ctn-hf">
-                                    <h3>Siam Graves</h3>
-                                    <p>That's Good</p>
-                                </div>
-                                <div class="review-item-rating">
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star-half"></i>
-                                </div>
-                            </div>
-                            <div class="single-review-st-text">
-                                <img src="img/notification/5.jpg" alt="">
-                                <div class="review-ctn-hf">
-                                    <h3>Sarah Graves</h3>
-                                    <p>Highly recommend</p>
-                                </div>
-                                <div class="review-item-rating">
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star-half"></i>
-                                </div>
-                            </div>
-                            <div class="single-review-st-text">
-                                <img src="img/notification/6.jpg" alt="">
-                                <div class="review-ctn-hf">
-                                    <h3>Julsha Grav</h3>
-                                    <p>Sei Hoise bro</p>
-                                </div>
-                                <div class="review-item-rating">
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star"></i>
-                                    <i class="educate-icon educate-star-half"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <div class="single-product-item res-mg-t-30 table-mg-t-pro-n tb-sm-res-d-n dk-res-t-d-n">
-                            <div class="single-product-image">
-                                <a href="#"><img src="img/product/book-4.jpg" alt=""></a>
-                            </div>
-                            <div class="single-product-text edu-pro-tx">
-                                <h4><a href="#">Title Demo Here</a></h4>
-                                <h5>Lorem ipsum dolor sit amet, this is a consec tetur adipisicing elit</h5>
-                                <div class="product-price">
-                                    <h3>$ 45</h3>
-                                    <div class="single-item-rating">
-                                        <i class="educate-icon educate-star"></i>
-                                        <i class="educate-icon educate-star"></i>
-                                        <i class="educate-icon educate-star"></i>
-                                        <i class="educate-icon educate-star"></i>
-                                        <i class="educate-icon educate-star-half"></i>
-                                    </div>
-                                </div>
-                                <div class="product-buttons">
-                                    <button type="button" class="button-default cart-btn">Read More</button>
-                                    <button type="button" class="button-default"><i class="fa fa-heart"></i></button>
-                                    <button type="button" class="button-default"><i class="fa fa-share"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
         <!-- Fin Bloque html -->
         <div class="product-sales-area mg-tb-30">
             
         </div>
 
         <!-- Inicio  Bloque html -->
-        <div class="courses-area mg-b-15">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <div class="white-box">
-                            <h3 class="box-title">Browser Status</h3>
-                            <ul class="basic-list">
-                                <li>Google Chrome <span class="pull-right label-danger label-1 label">95.8%</span></li>
-                                <li>Mozila Firefox <span class="pull-right label-purple label-2 label">85.8%</span></li>
-                                <li>Apple Safari <span class="pull-right label-success label-3 label">23.8%</span></li>
-                                <li>Internet Explorer <span class="pull-right label-info label-4 label">55.8%</span></li>
-                                <li>Opera mini <span class="pull-right label-warning label-5 label">28.8%</span></li>
-                                <li>Mozila Firefox <span class="pull-right label-purple label-6 label">26.8%</span></li>
-                                <li>Safari <span class="pull-right label-purple label-7 label">31.8%</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <div class="white-box res-mg-t-30 table-mg-t-pro-n">
-                            <h3 class="box-title">Visits from countries</h3>
-                            <ul class="country-state">
-                                <li>
-                                    <h2><span class="counter">1250</span></h2> <small>From Australia</small>
-                                    <div class="pull-right">75% <i class="fa fa-level-up text-danger ctn-ic-1"></i></div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-danger ctn-vs-1" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:75%;"> <span class="sr-only">75% Complete</span></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h2><span class="counter">1050</span></h2> <small>From USA</small>
-                                    <div class="pull-right">48% <i class="fa fa-level-up text-success ctn-ic-2"></i></div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-info ctn-vs-2" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:48%;"> <span class="sr-only">48% Complete</span></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h2><span class="counter">6350</span></h2> <small>From Canada</small>
-                                    <div class="pull-right">55% <i class="fa fa-level-up text-success ctn-ic-3"></i></div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success ctn-vs-3" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:55%;"> <span class="sr-only">55% Complete</span></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h2><span class="counter">950</span></h2> <small>From India</small>
-                                    <div class="pull-right">33% <i class="fa fa-level-down text-success ctn-ic-4"></i></div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success ctn-vs-4" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:33%;"> <span class="sr-only">33% Complete</span></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h2><span class="counter">3250</span></h2> <small>From Bangladesh</small>
-                                    <div class="pull-right">60% <i class="fa fa-level-up text-success ctn-ic-5"></i></div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-inverse ctn-vs-5" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:60%;"> <span class="sr-only">60% Complete</span></div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <div class="courses-inner res-mg-t-30 table-mg-t-pro-n tb-sm-res-d-n dk-res-t-d-n">
-                            <div class="courses-title">
-                                <a href="#"><img src="img/courses/1.jpg" alt="" /></a>
-                                <h2>Apps Development</h2>
-                            </div>
-                            <div class="courses-alaltic">
-                                <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-clock"></i></span> 1 Year</span>
-                                <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-heart"></i></span> 50</span>
-                                <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-dollar"></i></span> 500</span>
-                            </div>
-                            <div class="course-des">
-                                <p><span><i class="fa fa-clock"></i></span> <b>Duration:</b> 6 Months</p>
-                                <p><span><i class="fa fa-clock"></i></span> <b>Professor:</b> Jane Doe</p>
-                                <p><span><i class="fa fa-clock"></i></span> <b>Students:</b> 100+</p>
-                            </div>
-                            <div class="product-buttons">
-                                <button type="button" class="button-default cart-btn">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- Fin Bloque html -->
 
         <?php
@@ -496,13 +401,8 @@
 		============================================ -->
     <script src="js/metisMenu/metisMenu.min.js"></script>
     <script src="js/metisMenu/metisMenu-active.js"></script>
-    <!-- morrisjs JS
-		============================================ -->
-    <script src="js/morrisjs/raphael-min.js"></script>
-    <script src="js/morrisjs/morris.js"></script>
-    <script src="js/morrisjs/home3-active.js"></script>
-    <!-- morrisjs JS
-		============================================ -->
+    
+		
     <script src="js/sparkline/jquery.sparkline.min.js"></script>
     <script src="js/sparkline/jquery.charts-sparkline.js"></script>
     <script src="js/sparkline/sparkline-active.js"></script>
