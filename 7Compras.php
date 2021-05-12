@@ -222,17 +222,15 @@
                                                                       <div class="form-group-inner">
                                                                           <label>Cod Producto</label><br>
                                                                           <input  type="hidden" name="idProductoCompra" id="idProductoCompra" disabled > <!-- se asignan identificadores -->
-                                                                          <input type="text" name="codidoProductoCompra" id="codidoProductoCompra"  class="form-control " required
-                                                                          placeholder="Codigo Producto"
-                                                                          
-                                                                          data-success-class="u-has-success">  <!-- se asignan identificadores y detalles al campo de texto de la direccion comercial del proveedor -->  
+                                                                          <input type="text" name="codidoProductoCompra" id="codigoProductoCompra"  class="form-control " disabled required
+                                                                           data-success-class="u-has-success">  <!-- se asignan identificadores y detalles al campo de texto de la direccion comercial del proveedor -->  
                                                                       </div>
                                                                   </div>
                                                                   
                                                                   <div class="col-lg-3">
                                                                       <div class="form-group-inner">
                                                                           <label class="text-center" >Nombre Articulo</label><br>
-                                                                          <input class="form-control btnCosto" type="text" name="nombreProductoCompra" id="nombreProductoCompra" placeholder="Nombre Producto">
+                                                                          <input class="form-control btnCosto" type="text" name="nombreProductoCompra" id="nombreProductoCompra" disabled>
                                                                           
                                                                       </div>
                                                                   </div>
@@ -240,14 +238,14 @@
                                                                   <div class="col-lg-1">
                                                                       <div class="form-group-inner">
                                                                           <label class="text-center">Cantidad</label><br>
-                                                                          <input class="form-control " type="text" value="1" name="cantidadProductoCompra" id="cantidadProductoCompra">
+                                                                          <input class="form-control " type="text" value="1" name="cantidadProductoCompra" id="cantidadProductoCompra" disabled>
                                                                           
                                                                       </div>
                                                                   </div>
                                                                   <div class="col-lg-1">
                                                                       <div class="form-group-inner">
                                                                           <label class="text-center">Precio</label><br>
-                                                                          <input class="form-control " type="text" value="0" name="costoProductoCompra" id="costoProductoCompra">
+                                                                          <input class="form-control " type="text" value="0" name="costoProductoCompra" id="costoProductoCompra" disabled>
                                                                           
                                                                       </div>
                                                                   </div>
@@ -255,14 +253,14 @@
                                                                   <div class="col-lg-1">
                                                                       <div class="form-group-inner">
                                                                           <label class="text-center" >SubTotal</label><br>
-                                                                          <input class="form-control btnCosto" type="text" value="0" name="subTotalProductoCompra" id="subTotalProductoCompra">
+                                                                          <input class="form-control btnCosto" type="text" value="0" name="subTotalProductoCompra" id="subTotalProductoCompra" disabled>
                                                                           
                                                                       </div>
                                                                   </div>
                                                                   <div class="col-lg-2">
                                                                       <div class="form-group-inner">
-                                                                          <label class="text-center" >Agregar a la factura</label><br>
-                                                                          <button type='input' class='pull-left btn btn-custon-rounded-three btn-success' name ="addDetalleFactura"id="addDetalleFactura">+ Agregrar</button>
+                                                                          <label class="text-center" >Agregar a Factura</label><br>
+                                                                          <button type='input' class='pull-left btn btn-custon-rounded-three btn-success' name ="addDetalleFactura"id="addDetalleFactura" style="display: none">Agregar a Factura</button>
                                                                           
                                                                       </div>
                                                                   </div>
@@ -405,7 +403,7 @@
                                                                                     <div class="col-lg-6">
                                                                                         <div class="form-group-inner">
                                                                                                 <label>Forma de Pago</label>
-                                                                                                <select name="id_sueldoUsuario" id="id_sueldoUsuario" class="form-control" required>
+                                                                                                <select name="formaPago" id="formaPago" class="form-control" required>
                                                                                                 
                                                                                                             <option value="CONTADO"> CONTADO </option>
                                                                                                             <option value="CREDITO"> CREDITO </option>
@@ -446,13 +444,13 @@
                                                                                         <div class="form-group-inner">
                                                                                            <!-- ESPACIO vacio para alinear a la derecha a los botones -->
                                                                                             <div class="form-group-inner pull-right col-lg-3">
-                                                                                                <button type='button' data-dismiss="modal" href="#" class='pull-right btn btn-custon-rounded-three btn-danger justify-content-sm-center align-items-sm-center'>Cancelar</button> 
+                                                                                                <button type='button' data-dismiss="modal" href="#" class='pull-right btn btn-custon-rounded-three btn-danger justify-content-sm-center align-items-sm-center' name ="AnularCompra" id="AnularCompra">Cancelar</button> 
                                                                                             </div>  
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-lg-6">
                                                                                         <div class="form-group-inner pull-right col-lg-3">
-                                                                                                <button type='Submit' class='pull-right btn btn-custon-rounded-three btn-success justify-content-sm-center align-items-sm-center' name ="guardarProveedor"id="guardarProveedor">Guardar</button> 
+                                                                                                <button type='Submit' class='pull-right btn btn-custon-rounded-three btn-success justify-content-sm-center align-items-sm-center' name ="guardarCompra"id="guardarCompra" style="display: none">Guardar</button> 
                                                                                                 
                                                                                         </div>  
                                                                                         

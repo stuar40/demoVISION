@@ -73,8 +73,7 @@ $(document).ready(function(){
         $("#agregarArticuloNuevo").click(function(){
             const $botonGuardar = document.querySelector("#guardarProducto"); //selecciona el elemento del modal y lo pasa a una variable local
             $botonGuardar.style.display = "block"; //  muestra el boton guardar
-            const $botonEditar = document.querySelector("#editarProducto"); //selecciona el elemento del modal y lo pasa a una variable local
-            $botonEditar.style.display = "none"; // NO muestra el boton guardar
+            
             $(".modal-header").css("background-color","#0cd5ac");//cambia de colo el header del modal
             $(".modal-header").css("color","white"); //cambia el color de texto del header a blanco 
             $(".modal-title").text("Nuevo Producto");//titulo del header
@@ -82,14 +81,172 @@ $(document).ready(function(){
             $("#modalNuevoProductoCompra").modal("show"); //al cl
             action="guardarNuevoProducto"; //le da un valor globar a la variable que se usara en el submit del formulario modal nuevoProveedor
         });
-/////////////////////////////////////////////////
-       
-////////// funcino de agregar detalle a la factura de compra
+    /////////////////////////////////////////////////
+    
+       // BOTON MostrarPrivilegios
+       $("#AnularCompra").click(function(){
+        var rows =$('#tablaDetalleCompra tr').length;
+        if (rows > 0)
+        {
+            action="anularCompra"; //le da un valor globar a la variable que se usara en el submit del formulario modal nuevoProveedor
+            var nombreSucursal = $('#nombreSucursal').val();
+            var nombreUsuario = $('#nombreUsuario').val();
+            var tipoMovimiento = "COMPRA";
+
+            $.ajax({ //AJAX aqui se indica que vamos a hacer con los datos obtenidos del formulario
+                type: "POST",
+                url: "ajax/ajax7Compras.php", //indica el Ajax donde se procesara los parametros enviados 
+                async : true,
+                data: { action:action,
+                    nombreSucursal:nombreSucursal,
+                    nombreUsuario:nombreUsuario,
+                    tipoMovimiento:tipoMovimiento
+                        },
+        
+                    dataType: 'json', //indica que el valor que devuelve el ajax es json para poder manipular en js
+                    beforeSend: function(objeto){},
+                    success: function(data2){
+                            console.log("imprimir Resultado de Guardar el Producto"); 
+                            console.log(data2);
+                                        
+                            if(data2 == 'error'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
+                                    Swal.fire({
+                                    title: "Error al Anular Compra en BD", //titulo del modal
+                                    icon: 'error', //tipo de advertencia modal
+                                    timer: 3000                     
+                                    });
+                                    console.log("rechazado Error");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
+                                }
+                        
+                            else if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
+                                Swal.fire({
+                                        title: "Factura de Compra Anulada",
+                                        icon: 'success',
+                                        timer: 2000
+                                        }).then(function() {
+                                        //window.location = "2Sucursales.php";
+                                        });
+                                        //console.log(response); // imprimimos en consola para saber el array que nos devuelve
+                                        //var dataProductoNuevo = JSON.parse(data2); //parsea a fotmato el array del ajax en json
+                                         //$('#idProducto').val(data2.idProducto);
+                                         console.log(data2.idProducto);
+                                         $('#nombreProductoCompra').val(data2.nombreProducto); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
+                                         $('#codigoProductoCompra').val(data2.skuProducto); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
+                                         $('#idProductoCompra').val(data2.idProducto);
+                                         $('#costoProductoCompra').val(precioCostoProducto);
+                                         $('#nombreProductoCompra').attr('disabled','disabled');
+                                         $('#codigoProductoCompra').attr('disabled','disabled');
+                                         $('#subTotalProductoCompra').attr('disabled','disabled');
+                                         $('#cantidadProductoCompra').removeAttr('disabled');
+                                         $('#costoProductoCompra').removeAttr('disabled');
+                                         $("#form_modalProducto").trigger("reset"); //vacia los campos
+                                        // $("#modalNuevoProductoCompra").modal("hide"); //al cl
+                                         const $botonAgregarDetalle = document.querySelector("#addDetalleFactura"); //selecciona el elemento del modal y lo pasa a una variable local
+                                         $botonAgregarDetalle.style.display = "block"; //  muestra el boton
+                                         var url = '7Compras.php';    
+                                         $(location).attr('href',url); //redirecciona al formulario verProveedores
+                                
+                                    }
+                        }
+                });
+        }
+        
+    });
+////////////////////////////////////////////////
+
+
+// BOTON ProcesarCompra+
+$("#form_DetallesEncabezado").submit(function( event ){
+    
+    var rows =$('#tablaDetalleCompra tr').length;
+    if (rows > 0)
+    {
+        action="finalizarCompra"; //le da un valor globar a la variable que se usara en el submit del formulario modal nuevoProveedor
+        var nombreSucursal = $('#nombreSucursal').val();
+        var nombreUsuario = $('#nombreUsuario').val();
+        var id_Proveedor = $('#id_Proveedor').val();
+        var tipoDocCompra = $('#tipoDocCompra').val();
+        var fechaCompra = $('#fechaCompra').val();
+        var formaPago = $('#formaPago').val();
+        var noComprobanteCompra = $('#noComprobanteCompra').val();
+        var tipoMovimiento = "COMPRA";
+
+        $.ajax({ //AJAX aqui se indica que vamos a hacer con los datos obtenidos del formulario
+            type: "POST",
+            url: "ajax/ajax7Compras.php", //indica el Ajax donde se procesara los parametros enviados 
+            async : true,
+            data: { action:action,
+                    nombreSucursal:nombreSucursal,
+                    nombreUsuario:nombreUsuario,
+                    id_Proveedor:id_Proveedor,
+                    tipoDocCompra:tipoDocCompra,
+                    fechaCompra:fechaCompra,
+                    formaPago:formaPago,
+                    noComprobanteCompra:noComprobanteCompra,
+                    tipoMovimiento:tipoMovimiento
+                    },
+    
+                dataType: 'json', //indica que el valor que devuelve el ajax es json para poder manipular en js
+                beforeSend: function(objeto){},
+                
+                success: function(data2){
+                        console.log("imprimir Resultado de Guardar el Producto"); 
+                        console.log(data2);
+                                    
+                        if(data2 == 'error'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
+                                Swal.fire({
+                                title: "Error al Finalizar Compra en BD", //titulo del modal
+                                icon: 'error', //tipo de advertencia modal
+                                timer: 3000                     
+                                });
+                                console.log("rechazado Error");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
+                            }
+                    
+                        else if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
+                            Swal.fire({
+                                    title: "Factura de Ingresada Correctamente",
+                                    icon: 'success',
+                                    timer: 2000
+                                    }).then(function() {
+                                    window.location = "7Compras.php";
+                                    console.log("Finalizado Correctamente ");
+                                    });
+                                    
+                                     console.log("Finalizado Correctamente ");
+                                    
+                                    
+                                    //  $('#nombreProductoCompra').val(data2.nombreProducto); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
+                                    //  $('#codigoProductoCompra').val(data2.skuProducto); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
+                                    //  $('#idProductoCompra').val(data2.idProducto);
+                                    //  $('#costoProductoCompra').val(precioCostoProducto);
+                                    //  $('#nombreProductoCompra').attr('disabled','disabled');
+                                    //  $('#codigoProductoCompra').attr('disabled','disabled');
+                                    //  $('#subTotalProductoCompra').attr('disabled','disabled');
+                                    //  $('#cantidadProductoCompra').removeAttr('disabled');
+                                    //  $('#costoProductoCompra').removeAttr('disabled');
+                                    //  $("#form_modalProducto").trigger("reset"); //vacia los campos
+                                   
+                                      const $botonFinalizarCompra = document.querySelector("#guardarCompra"); //selecciona el elemento del modal y lo pasa a una variable local
+                                      $botonFinalizarCompra.style.display = "none"; //  muestra el boton
+                                    //  var url = '7Compras.php';    
+                                    //  //$(location).attr('href',url); //redirecciona al formulario verProveedores
+                            
+                               }else{
+                                console.log("No Data");
+                               }
+                            
+                    }
+            });
+    }
+    event.preventDefault();
+});
+////////////////////////////////////////////////
+    ////////// funcino de agregar detalle a la factura de compra
         $("#addDetalleFactura").click(function(){
             event.preventDefault();
 
             if ($('#cantidadProductoCompra').val()>0) {
-                var skuProducto = $('#codidoProductoCompra').val();
+                var skuProducto = $('#codigoProductoCompra').val();
                 var idProductoCompra = $('#idProductoCompra').val();
                 var cantidadProductoCompra = $('#cantidadProductoCompra').val();
                 var costoProductoCompra = $('#costoProductoCompra').val();
@@ -122,7 +279,7 @@ $(document).ready(function(){
                                                                      $('#detalle_Totales').html(Datos.totales); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
                                                                      $('#big_total').html("TOTAL Q. " + Datos.totalFactura);
                                                                      //Seteamos los campos de agregar prod 
-                                                                     $('#codidoProductoCompra').val('');
+                                                                     $('#codigoProductoCompra').val('');
                                                                      $('#idProductoCompra').val('');
                                                                      $('#nombreProductoCompra').val('');
                                                                      $('#cantidadProductoCompra').val('1');
@@ -130,6 +287,12 @@ $(document).ready(function(){
                                                                     // $('#nombreProductoBuscar').val('');
                                                                      $('#subTotalProductoCompra').val('');
                                                                      $('#subTotalProductoCompra').attr('disabled','disabled');
+                                                                     $('#cantidadProductoCompra').attr('disabled','disabled');
+                                                                     $('#costoProductoCompra').attr('disabled','disabled');
+                                                                     const $botonAgregarDetalle = document.querySelector("#addDetalleFactura"); //selecciona el elemento del modal y lo pasa a una variable local
+                                                                    $botonAgregarDetalle.style.display = "none"; //  muestra el boton
+                                                                     const $botonGuardarCompra = document.querySelector("#guardarCompra"); //selecciona el elemento del modal y lo pasa a una variable local
+                                                                     $botonGuardarCompra.style.display = "block"; //  muestra el boton guardar
                                                                 }else{//de lo contraio
                                                                     console.log("No existen datos");
                                                                 }//fin de la condicional y el else
@@ -169,11 +332,15 @@ $(document).ready(function(){
                                                                 var Datos = JSON.parse(response); //parsea a fotmato el array del ajax en json
                                                               //  $('#idProducto').val(Datos.idProducto);
                                                                 $('#nombreProductoCompra').val(Datos.nombreProducto); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
-                                                                $('#codidoProductoCompra').val(Datos.skuProducto); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
+                                                                $('#codigoProductoCompra').val(Datos.skuProducto); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
                                                                 $('#idProductoCompra').val(Datos.idProducto);
                                                                 $('#nombreProductoCompra').attr('disabled','disabled');
-                                                                $('#codidoProductoCompra').attr('disabled','disabled');
+                                                                $('#codigoProductoCompra').attr('disabled','disabled');
                                                                 $('#subTotalProductoCompra').attr('disabled','disabled');
+                                                                $('#cantidadProductoCompra').removeAttr('disabled');
+                                                                $('#costoProductoCompra').removeAttr('disabled');
+                                                                const $botonAgregarDetalle = document.querySelector("#addDetalleFactura"); //selecciona el elemento del modal y lo pasa a una variable local
+                                                                $botonAgregarDetalle.style.display = "block"; //  muestra el boton
                                                             }else{//de lo contraio
                                                                 console.log("No existen datos");
                                                             }//fin de la condicional y el else
@@ -215,25 +382,66 @@ $(document).ready(function(){
             }// fin de condicional si el keyup esta vacio
         });///////////FIN de la funcion keyup
 
-         //$("#cantidadProductoCompra").keyup(function(){
-            $(document).on("keyup", ".BOTONALGUNOS", function(){
+         //Boton quitar detalle de factura
+            $(document).on("click", ".btnQuitProductoDetalleCompra", function(){
                 event.preventDefault();
                 fila = $(this).closest("tr");
-                cantidadProducto = fila.find('td:eq(2)').text();
-                costo = parseInt(fila.find('td:eq(3)').text());
+                IdDetalleCompra = parseInt(fila.find('td:eq(0)').text());
+                usuarioSistema = $('#nombreUsuario').val();
+                console.log(IdDetalleCompra);
+                var action='deleteProductoDetalleCompra';
                
-                var subTotal = cantidadProducto * costo;
-                console.log(costo);
-                fila.find('td:eq(4)').html(subTotal);
-                // $('#subTotalProductoCompra').html(subTotal); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
-                $('#big_total').html("TOTAL Q. " + subTotal);
-                console.log($('#big_total').val());
+                $.ajax({ /////AJAX aqui se indica que vamos a hacer con los datos obtenidos del formulario
+                            
+                    url: "ajax/ajax7Compras.php", //indica el Ajax donde se procesara los parametros enviados 
+                    type: "POST",
+                    async: true,
+                    data: { action:action,
+                            IdDetalleCompra:IdDetalleCompra,
+                            usuarioSistema:usuarioSistema
+                        },
+                    success: function(response){ //recibe una respuesta con una array json
+                                                        console.log("Respuesta Datos Obtenidos Delete Detalle");
+                                                        var Datos = JSON.parse(response); //parsea a fotmato el array del ajax en json
+                                                       
+                                                        
+                                                       if (Datos != 'sinDatosTemp') {//condicional de respuesta
+                                                                     
+                                                                     console.log("Imprimir tabla despues de elminar");
+                                                                     $('#detalle_Compra').html(Datos.detalles); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
+                                                                     $('#detalle_Totales').html(Datos.totales); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
+                                                                     $('#big_total').html("TOTAL Q. " + Datos.totalFactura);
+                                                                     //Seteamos los campos de agregar prod 
+                                                                     $('#nombreProductoBuscar').val('');
+                                                                     $('#codigoProductoCompra').val('');
+                                                                     $('#idProductoCompra').val('');
+                                                                     $('#nombreProductoCompra').val('');
+                                                                     $('#cantidadProductoCompra').val('1');
+                                                                     $('#costoProductoCompra').val('0');
+                                                                     // $('#nombreProductoBuscar').val('');
+                                                                     $('#subTotalProductoCompra').val('');
+                                                                     $('#subTotalProductoCompra').attr('disabled','disabled');
+                                                                    
+                                                                    }else if (Datos == 'sinDatosTemp'){//de lo contraio
+                                                                    console.log("Sin articulos Agregados");
+                                                                    const $botonGuardarCompra = document.querySelector("#guardarCompra"); //selecciona el elemento del modal y lo pasa a una variable local
+                                                                    $botonGuardarCompra.style.display = "none"; //  muestra el boton guardar
+                                                                     $('#detalle_Compra').html(''); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
+                                                                     $('#detalle_Totales').html(''); 
+                                                                    }//fin de la condicional y el else
+                                                },//din de la funcion succes
+
+                    error: function(error){//en caso que suces response tira un error
+                                            console.log(error);
+                                        }
+                });///fin del ajax///
+               
                
             });///////////FIN de la funcion keyup
         
-        ////////// BOTON Guardar nuevo SUELDO EMPLEADO
-        //         $("#guardarProveedor").submit(function( event ) { 
-        $("#form_modalProducto1").submit(function( event ) { 
+        ////////// BOTON Guardar y Agregar nuevo Producto a Detalle Compras
+        $("#form_modalProducto").submit(function( event ) { 
+            
             // Capturando Texto que tienen los inputs del formulario modal donde esta el boton guardar
             idProducto = $.trim($("#idProducto").val()); // toma el valor que contenga los inputs del formulario con el idnombreComercial y lo ingresa a una variable 
             nombreProducto = $.trim($("#nombreProducto").val());// toma el valor que con
@@ -290,7 +498,7 @@ $(document).ready(function(){
                                             console.log("rechazado Error");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
                                         }
                                 
-                                    else if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
+                                    else { //if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
                                         Swal.fire({
                                                 title: "Producto Guardado Exitosamente",
                                                 icon: 'success',
@@ -298,69 +506,32 @@ $(document).ready(function(){
                                                 }).then(function() {
                                                 //window.location = "2Sucursales.php";
                                                 });
-                        
-                                                console.log("Producto ingresadoCorrectamente"); 
-                                                var url = '8Productos.php';    
-                                                $(location).attr('href',url); //redirecciona al formulario verProveedores
+                                                //console.log(response); // imprimimos en consola para saber el array que nos devuelve
+                                                //var dataProductoNuevo = JSON.parse(data2); //parsea a fotmato el array del ajax en json
+                                                 //$('#idProducto').val(data2.idProducto);
+                                                 console.log(data2.idProducto);
+                                                 $('#nombreProductoCompra').val(data2.nombreProducto); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
+                                                 $('#codigoProductoCompra').val(data2.skuProducto); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
+                                                 $('#idProductoCompra').val(data2.idProducto);
+                                                 $('#costoProductoCompra').val(precioCostoProducto);
+                                                 $('#nombreProductoCompra').attr('disabled','disabled');
+                                                 $('#codigoProductoCompra').attr('disabled','disabled');
+                                                 $('#subTotalProductoCompra').attr('disabled','disabled');
+                                                 $('#cantidadProductoCompra').removeAttr('disabled');
+                                                 $('#costoProductoCompra').removeAttr('disabled');
+                                                 $("#form_modalProducto").trigger("reset"); //vacia los campos
+                                                // $("#modalNuevoProductoCompra").modal("hide"); //al cl
+                                                 const $botonAgregarDetalle = document.querySelector("#addDetalleFactura"); //selecciona el elemento del modal y lo pasa a una variable local
+                                                 $botonAgregarDetalle.style.display = "block"; //  muestra el boton
+                                                // var url = '8Productos.php';    
+                                                // $(location).attr('href',url); //redirecciona al formulario verProveedores
                                         
                                             }
                                 }
                         });
                  }//fin de la condicional que selecciona si va guardar o editar cno el submit
                  else if(action == 'editarProducto') { // de lo contrario 
-                    $.ajax({ //AJAX aqui se indica que vamos a hacer con los datos obtenidos del formulario
-                        type: "POST",
-                        url: "ajax/ajax8Productos.php", //indica el Ajax donde se procesara los parametros enviados 
-                        //data: parametros,
-                        data: { action:action,
-                                idProducto:idProducto,
-                                nombreProducto:nombreProducto,
-                                skuProducto:skuProducto,
-                                tipoProducto:tipoProducto,
-                                marcaProducto:marcaProducto,
-                                presentacionProducto:presentacionProducto,
-                                estadoProducto:estadoProducto,
-                                id_Categoria:id_Categoria,
-                                descripcionProducto:descripcionProducto,
-                                imagenProducto:imagenProducto,
-                                precioCostoProducto:precioCostoProducto,
-                                precioVentaProducto:precioVentaProducto,
-                                precioPromoProducto:precioPromoProducto,
-                                stockMinProducto:stockMinProducto
-                                
-                            },
-                
-                            dataType: 'json', //indica que el valor que devuelve el ajax es json para poder manipular en js
-                            beforeSend: function(objeto){},
-                            success: function(data2){
-                                    console.log("imprimir Resultado de Editar el pRODUCTto"); 
-                                    
-                                                
-                                    if(data2 == 'error'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
-                                            Swal.fire({
-                                            title: "Error al ingresar a BD", //titulo del modal
-                                            icon: 'error', //tipo de advertencia modal
-                                            timer: 3000                     
-                                            });
-                                            console.log("rechazado Error");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
-                                        }
-                                
-                                    else if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
-                                        Swal.fire({
-                                                title: "Producto Editado Exitosamente",
-                                                icon: 'success',
-                                                timer: 2000
-                                                }).then(function() {
-                                                //window.location = "2Sucursales.php";
-                                                });
-                        
-                                                console.log("Producto Editado Correctamente"); 
-                                                var url = '8Productos.php';    
-                                                $(location).attr('href',url); //redirecciona al formulario verProveedores
-                                        
-                                            }
-                                }
-                        });
+                    
                  }
 
             event.preventDefault();
@@ -488,127 +659,7 @@ $(document).ready(function(){
         });
         /////////////////////////////////
         
-      
-       ///////////// BOTON ver Editar Privilegios
-        $(document).on("click", ".btnDesactivarComision", function(){
-
-            fila = $(this).closest("tr");
-            idTipoEmpleado = parseInt(fila.find('td:eq(0)').text());
-            rolTipoEmpleado = fila.find('td:eq(1)').text();
-            action = "obtener_datosTipoEmpleado";
-
-            const $botonGuardar = document.querySelector("#guardarTipoEmpleado"); //selecciona el elemento del modal y lo pasa a una variable local
-            $botonGuardar.style.display = "none"; //  muestra el boton guardar
-            const $botonEditar = document.querySelector("#editarTipoEmpleado"); //selecciona el elemento del modal y lo pasa a una variable local
-            $botonEditar.style.display = "none"; // NO muestra el boton guardar
-            const $estadobloquePrivilegios = document.querySelector("#bloquePrivilegios"); //selecciona el elemento del modal y lo pasa a una variable local
-            $estadobloquePrivilegios.style.display = "block"; // muestra el boton guardar
-            action = "obtener_datosTipoEmpleado";
-
-            $.ajax({ //ajax que va obtener valores de tabla de proveedor con id
-                url: './ajax/ajax3TipoEmpleado.php', //al documento php ajax al cual iran los datos y de donde retornara valores de la consulta
-                type: "POST",
-                async: true,
-                data: {action:action, idTipoEmpleado:idTipoEmpleado }, //envia valores al ajax action y el id
-                
-                success: function(response){ //recibe una respuesta con una array json
-                console.log("Respuesta Datos Obtenidos");
-                console.log(action);
-                
-                    if (response != 'error') {
-                            console.log(response); // imprimimos en consola para saber el array que nos devuelve
-                            var data2 = JSON.parse(response); //parsea a fotmato el array del ajax en json
-                                              
-                            $("#1").prop('checked', true);
-                            $('#idTipoEmpleado' ).val(data2.idTipoEmpleado); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
-                            $('#roltipoEmpleado').val(data2.rolTipoEmpleado); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
-                            $('#descripcionTipoEmpleado').val(data2.descripcionTipoEmpleado);
-                            $('#estadoTipoEmpleado').val(data2.estadoTipoEmpleado);
-                            $('#privilegioGrupoID').val(data2.grupoPrivilegioTipoEmpleado);
-
-                            $(".modal-header").css("background-color","#0cd5ac");//cambia de colo el header del modal
-                            $(".modal-header").css("color","white"); //cambia el color de texto del header a blanco 
-                            $(".modal-title").text("Ver Privilegios");//titulo del header
-                            $("#modalNuevoTipoEmpleado").modal("show"); //al clickear el boton nuevo proveedor lanza el modal que tiene el id Modal_Nuevo_Proveedor el cual es una clase alojada en /modal/editarProveedor llamada desde el archivo verProveedor
-                           
-                            console.log("Muestra Datos Tipo Empleado");
-                            action = "editarPrivilegiosTipoEmpleado";//setea el valor nuevo de accion en este caso editar privilegio
-                            console.log(action);
-                    }else{
-                    
-                    console.log("No existen datos")
-                    
-                        }
-                
-
-                },
-                error: function(error){
-                                    console.log(error);
-                                    }
-                
-            }); 
-
-        });
-
-        // BOTON Editar nuevo TipoEmpleado
-        $("#editarSueldoEmpleado").click(function(){
-            IDsueldoEmpleado = $.trim($("#idSueldoEmpleado").val()); // toma el valor
-            sueldoEmpleado = $.trim($("#sueldoEmpleado").val()); // toma el valor que contenga los inputs del formulario con el idnombreComercial y lo ingresa a una variable 
-            descripcionSueldoEmpleado = $.trim($("#descripcionSueldoEmpleado").val());// toma el valor que con
-            estadoSueldoEmpleado = $.trim($("#estadoSueldoEmpleado").val());
-            //condicional que edita los datos de empleado
-            if (action=='editarDatosSueldoEmpleado'){
-                $.ajax({ //aqui se indica que vamos a hacer con los datos obtenidos del formulario
-                    type: "POST",
-                    url: "ajax/ajax4MantenimientoSueldo.php", //indica el Ajax donde se procesara los parametros enviados 
-                    //data: parametros,
-                    data: { action:action,
-                            IDsueldoEmpleado:IDsueldoEmpleado,
-                            sueldoEmpleado:sueldoEmpleado,
-                            descripcionSueldoEmpleado:descripcionSueldoEmpleado,
-                            estadoSueldoEmpleado:estadoSueldoEmpleado
-                           },
-            
-                        dataType: 'json', //indica que el valor que devuelve el ajax es json para poder manipular en js
-                        beforeSend: function(objeto){},
-                        success: function(data2){
-                                console.log("Resultado de Editar Sueldo EMPLEADO"); 
-                                
-                                            
-                                if(data2 == 'error'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
-                                        Swal.fire({
-                                        title: "Error al Actaulizar en BD", //titulo del modal
-                                        icon: 'error', //tipo de advertencia modal
-                                        timer: 3000                     
-                                        });
-                                        console.log("rechazado Error");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
-                                    }
-                            
-                                else if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
-                                    Swal.fire({
-                                            title: "Tipo Sueldo Actualizado Exitosamente",
-                                            icon: 'success',
-                                            timer: 2000
-                                            }).then(function() {
-                                            //window.location = "2Sucursales.php";
-                                            });
-                    
-                                            console.log("Tipo de Empleado Actualizado Correctamente"); 
-                                            var url = '4MantenimientoSueldo.php';    
-                                            $(location).attr('href',url); //redirecciona al formulario verProveedores
-                                        
-                                        }
-                            }
-                    });
-            }
-            //de lo contrario si es otra accion realizara lo siguiente
-           
-           
-            
-        });
-        //////////
-
-       
+   
 
         
         ////FIN FUNCIONES
@@ -616,3 +667,32 @@ $(document).ready(function(){
 
 }); // End Ready  //FIN DEL READY de la carga de la pagina 
 
+///////////////////////////////////////FUNCIONESS////////////////////////////
+///////////////////////////////////////FUNCIONESS////////////////////////////
+///////////////////////////////////////FUNCIONESS////////////////////////////
+///////////////////////////////////////FUNCIONESS////////////////////////////
+
+
+
+
+function deleteProductoDetalle(varIdDetalleCompra){
+var action='del_product_detalle';
+var IdDetalleCompra=IdDetalleCompra;
+$.ajax({ /////AJAX aqui se indica que vamos a hacer con los datos obtenidos del formulario
+               
+    url: "ajax/ajax7Compras.php", //indica el Ajax donde se procesara los parametros enviados 
+    type: "POST",
+    async: true,
+    data: { action:action,
+            IdDetalleCompra:IdDetalleCompra
+           },
+    success: function(response){ //recibe una respuesta con una array json
+                                        console.log("Respuesta Datos Obtenidos Delete Detalle");
+                                        console.log(response);
+                                },//din de la funcion succes
+
+    error: function(error){//en caso que suces response tira un error
+                             console.log(error);
+                          }
+});///fin del ajax///
+}

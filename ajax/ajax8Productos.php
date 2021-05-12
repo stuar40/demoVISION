@@ -38,8 +38,8 @@ include("../config/testconexion.php");
             $resultado=mysqli_query($conexionbd,$QueryMySQL);
             
             if($resultado){
-        
-                $data2='successful';
+                $data2=mysqli_fetch_assoc($resultado);
+                //$data2='successful';
             
             }
             else {

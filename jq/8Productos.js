@@ -169,18 +169,19 @@ $(document).ready(function(){
                                             console.log("rechazado Error");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
                                         }
                                 
-                                    else if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
-                                        Swal.fire({
-                                                title: "Producto Guardado Exitosamente",
-                                                icon: 'success',
-                                                timer: 2000
-                                                }).then(function() {
-                                                //window.location = "2Sucursales.php";
-                                                });
-                        
-                                                console.log("Producto ingresadoCorrectamente"); 
-                                                var url = '8Productos.php';    
-                                                $(location).attr('href',url); //redirecciona al formulario verProveedores
+                                    else {//if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
+                                            Swal.fire({
+                                                    title: "Producto Guardado Exitosamente",
+                                                    icon: 'success',
+                                                    timer: 2000
+                                                    }).then(function() {
+                                                    //window.location = "2Sucursales.php";
+                                                    console.log("Producto ingresadoCorrectamente"); 
+                                                    var url = '8Productos.php';    
+                                                    $(location).attr('href',url); //redirecciona al formulario verProveedores
+                                                    });
+                            
+                                                   
                                         
                                             }
                                 }

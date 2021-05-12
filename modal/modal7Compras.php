@@ -224,13 +224,13 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-lg-6">
-                                                                                        <div class="form-group-inner pull-right col-lg-3">
+                                                                                        <div class="form-group-inner pull-right col-lg-6">
                                                                                                 <button type='Submit' class='pull-right btn btn-custon-rounded-three btn-success justify-content-sm-center align-items-sm-center' name ="guardarProducto" id="guardarProducto">Agregar y Guardar</button> 
-                                                                                                <button type='input' class='pull-right btn btn-custon-rounded-three btn-success justify-content-sm-center align-items-sm-center' name ="prueba" id="prueba"> Prueba</button> 
-                                                                                                <button type='Submit' class='pull-right btn btn-custon-rounded-three btn-success' name ="editarProducto"id="editarProducto">Editar</button> 
+                                                                                                
+                                                                                                
                                                                                         </div>  
                                                                                         <div class="form-group-inner pull-right col-lg-3">
-                                                                                                <button type='button' data-dismiss="modal" href="#" class='pull-right btn btn-custon-rounded-three btn-danger justify-content-sm-center align-items-sm-center'>Cancelar</button> 
+                                                                                                <button type='button' data-dismiss="modal" href="#" class=' btn btn-custon-rounded-three btn-danger justify-content-sm-center align-items-sm-center'>Cancelar</button> 
                                                                                         </div>  
                                                                                     </div>
                                                                                 </div>
