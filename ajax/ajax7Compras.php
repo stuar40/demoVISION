@@ -366,6 +366,38 @@ include("../config/testconexion.php");
                      }
          exit; }
     }/////////// fin anularCompra COMPRA TEMPORAL
+
+
+     //////////// Validar SKU Duplicado 
+     if ($_POST['action'] == "validarSKU" ) {
+        # code...
+     
+        if(empty($_POST['skuProducto']) )//CONDIConal para que los campos no esten vacios
+        {
+            echo 'error';
+        }else{
+                    $skuProducto =$_POST['skuProducto'];
+                    $data2 = array();
+                    
+                    $QueryMySQL="SELECT * FROM producto where skuProducto ='$skuProducto';";
+                     $resultado=mysqli_query($conexionbd,$QueryMySQL);
+                    
+                     $numFILAS =mysqli_num_rows($resultado);
+                        if ($numFILAS>0){
+                                            $data2='repetido';
+                                        }else{//condicional que nos indica si hay valores den el temporal
+                                                $data2='unico';
+                                                //echo "error response";
+                                             }
+                               
+                                echo json_encode($data2); //devuelve el resultado
+                                mysqli_close($conexionbd);
+                                exit;
+                    
+                     
+                     
+         exit; }
+    }/////////// fin Validar SKU
     /////////////
    
 } //=========================fin del if del AJAXX===============================================================================================================================================================

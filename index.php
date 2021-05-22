@@ -130,14 +130,14 @@
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
-	<div class="error-pagewrap">
-		<div class="error-page-int">
-			<div class="text-center m-b-md custom-login">
+	<div class="error-pagewrap" style="background-image: url(img/Fondo.jpg);">
+		<div class="error-page-int" style="background-image: url(img/FondoLogin.jpg);">
+			<div class="text-center m-b-md custom-login" >
 				<h3>Optica MacroVision</h3>
-				<p>Inciar Sesion</p>
+				
 			</div>
 			<div class="content-error">
-				<div class="hpanel">
+				<div class="hpanel" > 
                     <div class="panel-body">
                         <form action="" method = "post" id="loginForm">
                             <div class="form-group">
@@ -156,7 +156,7 @@
                                 
                             </div>
                             <input type="text" name="action" id="action" value="login" style="visibility:hidden;"> 
-                            <button name="login" id="login" type = "submit" class="btn btn-success btn-block loginbtn">Login</button>
+                            <button name="login" id="login" type = "submit" class="btn btn-success btn-block loginbtn" style="color: #ffffff; background-color: #0cd5ac;border-color: #0cd5ac " >Login</button>
                             
                         </form>
                     </div>

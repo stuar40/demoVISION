@@ -37,40 +37,9 @@ Restricciones o validaciones
       Validar Formulariio modal de proveedro
       
 
-      CREATE DEFINER=`ssolucionesgt_estuardo`@`45.5.116.2` PROCEDURE `INSERTgenerarCompra`(  		IN varnoDocumentoCompra varchar(75) , IN varSucursal_idSucursal int ,
-                                            IN varProveedor_idProveedor int,	IN varUsuario_idUsuario int )
-BEGIN
-	DECLARE factura INT;
-    DECLARE registros INT;
-    DECLARE Maxid_tblcompras varchar(11) default null;
-    DECLARE total DECIMAL(10.2);
-    DECLARE nuevaExistencia INT;
-    DECLARE actualExistencia INT;
-    DECLARE tmpCodProducto INT;
-    DECLARE tmpCantidadProducto INT;
-    DECLARE acumulador INT;
-    set acumulador = 1;
-    
-	set registros  = (SELECT COUNT(*) FROM tmp_Detalles where tmp_tknUsuario = varUsuario_idUsuario and tmp_TipoMovimiento='COMPRA');
-	IF registros > 0 THEN
-    Select ifnull(max(idCompras),0)+1 into Maxid_tblcompras from compras;
-    INSERT INTO `compras` (`idCompras`, `noDocumentoCompra`, `estadoCompra`, 
-			`Sucursal_idSucursal`, `Proveedor_idProveedor`, `Usuario_idUsuario`) 
-            VALUES 
-            (Maxid_tblcompras, varnoDocumentoCompra, 'ACTIVO', varSucursal_idSucursal,varProveedor_idProveedor, varUsuario_idUsuario);
-            
-            insert into detallecompra (`precioCompraDetalle`, `cantidadCompra`,
-            `Compras_idCompras`, `Producto_idProducto`) SELECT  tmp_precio as precioCompraDetalle,
-            tmp_cantidad as cantidadCompra,(Maxid_tblcompras) as Compras_idCompras,
-            tmp_codProducto as Producto_idProducto FROM tmp_Detalles 
-            where tmp_tknUsuario = varUsuario_idUsuario  and tmp_TipoMovimiento='COMPRA'; 
-            
-			
-    ELSE
-    Select 0;
-    END IF;
-    
-END
+    MODULO GENERARA COMPRAS 
+    al guardar producto validar que no sea repetido
+    Agregar Stock al almacenar
 
 
 
@@ -148,4 +117,136 @@ BEGIN
     Select 0;
     END IF;
     
-END
+
+
+
+//////////////////////////////procedimiento COMPRA CON Stock
+DROP PROCEDURE IF EXISTS INSERTgenerarCompra;
+DELIMITER $$
+CREATE  PROCEDURE `INSERTgenerarCompra`(  	IN varnoDocumentoCompra varchar(75) , IN varSucursal_idSucursal int ,
+                                            IN varProveedor_idProveedor int,	IN varUsuario_idUsuario int )
+BEGIN
+	DECLARE factura INT;
+    DECLARE registros INT; 
+    DECLARE registroStock INT; 
+    DECLARE Maxid_tblcompras varchar(11) default null;
+    DECLARE Maxid_tblstock varchar(11) default null;
+    DECLARE total DECIMAL(10,2);
+    DECLARE subTotal DECIMAL(10,2);
+    DECLARE impuestosTotal DECIMAL(10,2);
+    DECLARE precioMinimoActual DECIMAL(10,2);
+    DECLARE precioMinimoNuevo DECIMAL(10,2);
+    DECLARE nuevaExistencia INT;
+    DECLARE actualExistencia INT;
+    DECLARE tmpCodProducto INT;
+    DECLARE tmpCantidadProducto INT;
+    DECLARE tmpPrecioProducto DECIMAL(10,2);
+    DECLARE PrecioProductoVenta DECIMAL(10,2);
+    DECLARE PrecioProductoPromo DECIMAL(10,2);
+    DECLARE acumulador INT;
+    DECLARE idStockUpdate INT;
+    DECLARE FechaGTM DATETIME;
+    DECLARE FechaResultado DATE; 
+     
+    set acumulador = 1;
+    
+   
+    
+    create temporary table IF NOT EXISTS tbl_tmpProductosCompra(
+    id bigint NOT NULL auto_increment primary key,
+    codProducto bigint,
+    cantProducto int,
+    preciProducto double);
+    truncate table tbl_tmpProductosCompra;
+    
+	set registros  = (SELECT COUNT(*) FROM tmp_Detalles where tmp_tknUsuario = varUsuario_idUsuario and tmp_TipoMovimiento='COMPRA');
+	IF registros > 0 THEN
+    INSERT INTO  tbl_tmpProductosCompra (codProducto,cantProducto,preciProducto) SELECT tmp_codProducto,tmp_cantidad,tmp_precio  FROM tmp_Detalles where tmp_tknUsuario = varUsuario_idUsuario  and tmp_TipoMovimiento='COMPRA';
+    
+    Select ifnull(max(idCompras),0)+1 into Maxid_tblcompras from compras;
+     SELECT convert_tz(now(),@@session.time_zone,'-06:00') into FechaGTM;
+    SELECT DATE(FechaGTM) into FechaResultado;
+    INSERT INTO `compras` (`idCompras`, `noDocumentoCompra`,`fechaCompra`,`estadoCompra`, 
+			`Sucursal_idSucursal`, `Proveedor_idProveedor`, `Usuario_idUsuario`) 
+            VALUES 
+            (Maxid_tblcompras, varnoDocumentoCompra, FechaGTM,'ACTIVO', varSucursal_idSucursal,varProveedor_idProveedor, varUsuario_idUsuario);
+            
+            insert into detallecompra (`precioCompraDetalle`, `cantidadCompra`,
+            `Compras_idCompras`, `Producto_idProducto`) SELECT  tmp_precio as precioCompraDetalle,
+            tmp_cantidad as cantidadCompra,(Maxid_tblcompras) as Compras_idCompras,
+            tmp_codProducto as Producto_idProducto FROM tmp_Detalles 
+            where tmp_tknUsuario = varUsuario_idUsuario  and tmp_TipoMovimiento='COMPRA'; 
+            
+			WHILE acumulador <= registros DO
+            SELECT codProducto,cantProducto,preciProducto INTO  tmpCodProducto, tmpCantidadProducto,tmpPrecioProducto from  tbl_tmpProductosCompra WHERE id = acumulador;
+            set registroStock  = (SELECT count(*) FROM stock where Producto_idProducto = tmpCodProducto and  tipoStock = 1);
+            
+			IF registroStock > 0 THEN  #if de stock #Codigo para Actualizar en FIFO el stok del producto 
+					SELECT idStock,stockVenta,precioMinimo into idStockUpdate,actualExistencia,precioMinimoActual from stock where Producto_idProducto = tmpCodProducto and   tipoStock = 1;
+					SELECT precioVentaProducto,precioPromoProducto into PrecioProductoVenta,PrecioProductoPromo from producto  where idProducto = tmpCodProducto;
+                    
+					set subTotal = tmpCantidadProducto * tmpPrecioProducto;
+                    set nuevaExistencia =tmpCantidadProducto + actualExistencia;
+					set precioMinimoNuevo = ((precioMinimoActual*actualExistencia)+subTotal)/nuevaExistencia;
+                    
+                    
+					UPDATE `detallecompra` SET 
+					`subtotalCompraDetalle` = subTotal, 
+					`estadoDetalle` = 'ACTIVO' 
+					WHERE (`Producto_idProducto` = tmpCodProducto and `Compras_idCompras`= Maxid_tblcompras and `precioCompraDetalle`= tmpPrecioProducto);
+					
+                    
+                    UPDATE `stock` SET  #`stockFactura` = 'StockAcumuladoGlobal', 
+										`fechaStock` =FechaResultado,
+                                        `stockVenta` = nuevaExistencia, `precioMinimo` = precioMinimoNuevo, 
+										`precioVenta` = PrecioProductoVenta, `precioPromo` = PrecioProductoPromo
+										 WHERE (`idStock` = idStockUpdate);
+
+					set acumulador = acumulador+1;
+                     
+					ELSE  #else if de stock
+                    #Codigo para insertar un nuevo stok en caso de que el producto sea nuevo y no tenga ningun stock
+                    SELECT precioVentaProducto,precioPromoProducto into PrecioProductoVenta,PrecioProductoPromo from producto  where idProducto = tmpCodProducto;
+                    
+                    Select ifnull(max(idStock),0)+1 into Maxid_tblstock from stock;
+                    set subTotal = tmpCantidadProducto * tmpPrecioProducto;
+					
+					UPDATE `detallecompra` SET 
+					`subtotalCompraDetalle` = subTotal, 
+					`estadoDetalle` = 'ACTIVO' 
+					WHERE (`Producto_idProducto` = tmpCodProducto and `Compras_idCompras`= Maxid_tblcompras and `precioCompraDetalle`= tmpPrecioProducto);
+					
+                    SELECT idDetalleCompra into idStockUpdate  FROM detallecompra where `Producto_idProducto` = tmpCodProducto and `Compras_idCompras`= Maxid_tblcompras and `precioCompraDetalle`= tmpPrecioProducto;
+                    INSERT INTO `stock` 
+								(`idStock`,`fechaStock`, `stockFactura`, `stockVenta`, 
+								`precioMinimo`, `precioVenta`, `precioPromo`, 
+								`estadoStock`, `Producto_idProducto`, `Sucursal_idSucursal`, 
+								`DetalleCompra_idDetalleCompra`, `tipoStock`) 
+								VALUES 
+								(Maxid_tblstock, FechaResultado,tmpCantidadProducto, tmpCantidadProducto, 
+								tmpPrecioProducto, PrecioProductoVenta, PrecioProductoPromo, 
+								'ACTIVO', tmpCodProducto, varSucursal_idSucursal, 
+								idStockUpdate, '1');
+					set acumulador = acumulador+1;
+                    END IF; #End if de stock
+					
+                    END WHILE;
+					
+					Set total = (SELECT SUM(tmp_cantidad * tmp_precio) from tmp_Detalles WHERE tmp_tknUsuario = varUsuario_idUsuario  and tmp_TipoMovimiento='COMPRA');
+					set impuestosTotal=0;
+					UPDATE `compras` SET 
+					`Subtotal` = total, 
+					`impuestosCompra` = impuestosTotal, 
+					`totalCompra` = total   WHERE (`idCompras` = Maxid_tblcompras);
+					
+					DELETE FROM tmp_Detalles WHERE tmp_tknUsuario = varUsuario_idUsuario  and tmp_TipoMovimiento='COMPRA';
+					truncate table tbl_tmpProductosCompra;
+					SELECT * FROM  compras where idCompras = Maxid_tblcompras;
+                   
+
+    ELSE
+    Select 0;
+    END IF;
+    
+END $$
+DELIMITER $$

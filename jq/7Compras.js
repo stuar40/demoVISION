@@ -79,7 +79,7 @@ $(document).ready(function(){
             $(".modal-title").text("Nuevo Producto");//titulo del header
             $("#form_modalProducto").trigger("reset"); //vacia los campos
             $("#modalNuevoProductoCompra").modal("show"); //al cl
-            action="guardarNuevoProducto"; //le da un valor globar a la variable que se usara en el submit del formulario modal nuevoProveedor
+            action="validarSKU"; //le da un valor globar a la variable que se usara en el submit del formulario modal nuevoProveedor
         });
     /////////////////////////////////////////////////
     
@@ -213,19 +213,6 @@ $("#form_DetallesEncabezado").submit(function( event ){
                                     });
                                     
                                      console.log("Finalizado Correctamente ");
-                                    
-                                    
-                                    //  $('#nombreProductoCompra').val(data2.nombreProducto); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
-                                    //  $('#codigoProductoCompra').val(data2.skuProducto); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
-                                    //  $('#idProductoCompra').val(data2.idProducto);
-                                    //  $('#costoProductoCompra').val(precioCostoProducto);
-                                    //  $('#nombreProductoCompra').attr('disabled','disabled');
-                                    //  $('#codigoProductoCompra').attr('disabled','disabled');
-                                    //  $('#subTotalProductoCompra').attr('disabled','disabled');
-                                    //  $('#cantidadProductoCompra').removeAttr('disabled');
-                                    //  $('#costoProductoCompra').removeAttr('disabled');
-                                    //  $("#form_modalProducto").trigger("reset"); //vacia los campos
-                                   
                                       const $botonFinalizarCompra = document.querySelector("#guardarCompra"); //selecciona el elemento del modal y lo pasa a una variable local
                                       $botonFinalizarCompra.style.display = "none"; //  muestra el boton
                                     //  var url = '7Compras.php';    
@@ -284,7 +271,7 @@ $("#form_DetallesEncabezado").submit(function( event ){
                                                                      $('#nombreProductoCompra').val('');
                                                                      $('#cantidadProductoCompra').val('1');
                                                                      $('#costoProductoCompra').val('0');
-                                                                    // $('#nombreProductoBuscar').val('');
+                                                                     $('#nombreProductoBuscar').val('');
                                                                      $('#subTotalProductoCompra').val('');
                                                                      $('#subTotalProductoCompra').attr('disabled','disabled');
                                                                      $('#cantidadProductoCompra').attr('disabled','disabled');
@@ -458,77 +445,117 @@ $("#form_DetallesEncabezado").submit(function( event ){
             stockMinProducto = $.trim($("#stockMinProducto").val());// toma el valor que con
             imagenProducto = $.trim($("#imagenProducto").val());// toma el valor que con
             
-            
-            
-                if(action == 'guardarNuevoProducto'){ 
-                    $.ajax({ //AJAX aqui se indica que vamos a hacer con los datos obtenidos del formulario
+                if(action == 'validarSKU'){ 
+                    ///VALIDAR SKU REPETIDO
+                    
+                    /////AJAX que valida si el SKU es repetido o es unico
+                    $.ajax({ //aqui se indica que vamos a hacer con los datos obtenidos del formulario
                         type: "POST",
-                        url: "ajax/ajax8Productos.php", //indica el Ajax donde se procesara los parametros enviados 
-                        
+                        url: "ajax/ajax7Compras.php", //indica el Ajax donde se procesara los parametros enviados 
+                        //data: parametros,
                         data: { action:action,
-                                idProducto:idProducto,
-                                nombreProducto:nombreProducto,
-                                skuProducto:skuProducto,
-                                tipoProducto:tipoProducto,
-                                marcaProducto:marcaProducto,
-                                presentacionProducto:presentacionProducto,
-                                estadoProducto:estadoProducto,
-                                id_Categoria:id_Categoria,
-                                descripcionProducto:descripcionProducto,
-                                imagenProducto:imagenProducto,
-                                precioCostoProducto:precioCostoProducto,
-                                precioVentaProducto:precioVentaProducto,
-                                precioPromoProducto:precioPromoProducto,
-                                stockMinProducto:stockMinProducto
-                               
-                            },
+                                skuProducto:skuProducto
+                               },
                 
                             dataType: 'json', //indica que el valor que devuelve el ajax es json para poder manipular en js
                             beforeSend: function(objeto){},
                             success: function(data2){
-                                    console.log("imprimir Resultado de Guardar el Producto"); 
-                                    console.log(data2);
-                                                
-                                    if(data2 == 'error'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
+                                                console.log(data2);
+                                    if(data2 == 'repetido'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
                                             Swal.fire({
-                                            title: "Error al ingresar a BD", //titulo del modal
+                                            title: "SKU Repetido Ingresar Otro", //titulo del modal
                                             icon: 'error', //tipo de advertencia modal
                                             timer: 3000                     
                                             });
-                                            console.log("rechazado Error");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
+                                            skuProducto = $("#skuProducto").val('');
+                                            console.log("rechazado SKU Repetido");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
                                         }
                                 
-                                    else { //if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
-                                        Swal.fire({
-                                                title: "Producto Guardado Exitosamente",
-                                                icon: 'success',
-                                                timer: 2000
-                                                }).then(function() {
-                                                //window.location = "2Sucursales.php";
-                                                });
-                                                //console.log(response); // imprimimos en consola para saber el array que nos devuelve
-                                                //var dataProductoNuevo = JSON.parse(data2); //parsea a fotmato el array del ajax en json
-                                                 //$('#idProducto').val(data2.idProducto);
-                                                 console.log(data2.idProducto);
-                                                 $('#nombreProductoCompra').val(data2.nombreProducto); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
-                                                 $('#codigoProductoCompra').val(data2.skuProducto); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
-                                                 $('#idProductoCompra').val(data2.idProducto);
-                                                 $('#costoProductoCompra').val(precioCostoProducto);
-                                                 $('#nombreProductoCompra').attr('disabled','disabled');
-                                                 $('#codigoProductoCompra').attr('disabled','disabled');
-                                                 $('#subTotalProductoCompra').attr('disabled','disabled');
-                                                 $('#cantidadProductoCompra').removeAttr('disabled');
-                                                 $('#costoProductoCompra').removeAttr('disabled');
-                                                 $("#form_modalProducto").trigger("reset"); //vacia los campos
-                                                // $("#modalNuevoProductoCompra").modal("hide"); //al cl
-                                                 const $botonAgregarDetalle = document.querySelector("#addDetalleFactura"); //selecciona el elemento del modal y lo pasa a una variable local
-                                                 $botonAgregarDetalle.style.display = "block"; //  muestra el boton
-                                                // var url = '8Productos.php';    
-                                                // $(location).attr('href',url); //redirecciona al formulario verProveedores
-                                        
+                                    else if(data2 == 'unico') { // de lo contrario el msj sera usuario guardado 
+                                        console.log("SKU Unico Procedemos a ingresar Prod"); 
+                                        action="guardarNuevoProducto";
+                                              //<<<<<<<<<<<<AJAX GUARDA PRODUCTO
+                                                $.ajax({ //AJAX aqui se indica que vamos a hacer con los datos obtenidos del formulario
+                                                    type: "POST",
+                                                    url: "ajax/ajax8Productos.php", //indica el Ajax donde se procesara los parametros enviados 
+                                                    
+                                                    data: { action:action,
+                                                            idProducto:idProducto,
+                                                            nombreProducto:nombreProducto,
+                                                            skuProducto:skuProducto,
+                                                            tipoProducto:tipoProducto,
+                                                            marcaProducto:marcaProducto,
+                                                            presentacionProducto:presentacionProducto,
+                                                            estadoProducto:estadoProducto,
+                                                            id_Categoria:id_Categoria,
+                                                            descripcionProducto:descripcionProducto,
+                                                            imagenProducto:imagenProducto,
+                                                            precioCostoProducto:precioCostoProducto,
+                                                            precioVentaProducto:precioVentaProducto,
+                                                            precioPromoProducto:precioPromoProducto,
+                                                            stockMinProducto:stockMinProducto
+                                                        
+                                                        },
+                                            
+                                                        dataType: 'json', //indica que el valor que devuelve el ajax es json para poder manipular en js
+                                                        beforeSend: function(objeto){},
+                                                        success: function(data2){
+                                                                console.log("imprimir Resultado de Guardar el Producto"); 
+                                                                console.log(data2);
+                                                                            
+                                                                if(data2 == 'error'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
+                                                                        Swal.fire({
+                                                                        title: "Error al ingresar a BD", //titulo del modal
+                                                                        icon: 'error', //tipo de advertencia modal
+                                                                        timer: 3000                     
+                                                                        });
+                                                                        console.log("rechazado Error");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
+                                                                    }
+                                                            
+                                                                else { //if(data2 == 'successful') { // de lo contrario el msj sera usuario guardado 
+                                                                    Swal.fire({
+                                                                            title: "Producto Guardado Exitosamente",
+                                                                            icon: 'success',
+                                                                            timer: 2000
+                                                                            }).then(function() {
+                                                                            //window.location = "2Sucursales.php";
+                                                                            console.log(data2.idProducto);
+                                                                            $('#nombreProductoCompra').val(data2.nombreProducto); // carga el valor de data2.nombre en un input del modal nuevo_proveedor el cual tenga el id nombreComercial y los de abajo tambien
+                                                                            $('#codigoProductoCompra').val(data2.skuProducto); // carga en el inpunt del modal con el id proveedorNIT lo que obtuvo de vuelta de la funcion obtener_datos del ajaxProveedore
+                                                                            $('#idProductoCompra').val(data2.idProducto);
+                                                                            $('#costoProductoCompra').val(precioCostoProducto);
+                                                                            var subTotal = precioCostoProducto * 1;
+                                                                            $('#subTotalProductoCompra').val(subTotal);
+                                                                            $('#nombreProductoCompra').attr('disabled','disabled');
+                                                                            $('#codigoProductoCompra').attr('disabled','disabled');
+                                                                            $('#subTotalProductoCompra').attr('disabled','disabled');
+                                                                            $('#cantidadProductoCompra').removeAttr('disabled');
+                                                                            $('#costoProductoCompra').removeAttr('disabled');
+                                                                            $("#form_modalProducto").trigger("reset"); //vacia los campos
+                                                                            $("#modalNuevoProductoCompra").modal("hide"); //al cl
+                                                                            const $botonAgregarDetalle = document.querySelector("#addDetalleFactura"); //selecciona el elemento del modal y lo pasa a una variable local
+                                                                            $botonAgregarDetalle.style.display = "block"; //  muestra el boton
+                                                                            });
+                                                                            //console.log(response); // imprimimos en consola para saber el array que nos devuelve
+                                                                            //var dataProductoNuevo = JSON.parse(data2); //parsea a fotmato el array del ajax en json
+                                                                            //$('#idProducto').val(data2.idProducto);
+                                                                        
+                                                                            // var url = '8Productos.php';    
+                                                                            // $(location).attr('href',url); //redirecciona al formulario verProveedores
+                                                                    
+                                                                        }
+                                                            }
+                                                    });//FIN DEL AJAX QUE GUARDA LOS DATOS
+                                               
                                             }
                                 }
-                        });
+                        });/////FIN AJAX que valida si el SKU es repetido o es unico
+
+                  
+
+
+
+
                  }//fin de la condicional que selecciona si va guardar o editar cno el submit
                  else if(action == 'editarProducto') { // de lo contrario 
                     

@@ -196,7 +196,7 @@
                                                                                         <div class="form-group-inner">
                                                                                                 <label>Imagen Cargada</label>
                                                                                                 <div class="">
-                                                                                                    <a href="#"><img src="img/courses/1.jpg" alt=""></a>
+                                                                                                    <a href="#"><img src="img/Aros/Lentes.jpg" alt=""></a>
                                                                                                 </div>
                                                                                                 
                                                                                         </div>

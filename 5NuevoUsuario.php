@@ -1,5 +1,6 @@
 <?php
-   include('login/session.php');
+session_start();
+   //include('login/session.php');
    include('menus/menuizq.php');
    include("config/testconexion.php");
    
@@ -420,8 +421,8 @@
 
                                                                           ?>
                                                                           <br>
-                                                                <label >Foto Empleado</label> <!-- etiqueta del campo de texto  donde se ingresa la direccion comercial del proveedor -->
-                                                                <span class="h10 ">(opcional)</span>
+                                                                <!-- <label >Foto Empleado</label> etiqueta del campo de texto  donde se ingresa la direccion comercial del proveedor -->
+                                                                <!-- <span class="h10 ">(opcional)</span>
                                                                 <div class="form-group ">
                                                                   <div class="file-upload-inner file-upload-inner-right ts-forms">
                                                                       <div class="input append-small-btn">
@@ -433,21 +434,21 @@
                                                                       </div>
                                                                     </div>
                                                                 </div>
-                                                                <br>
+                                                                <br> -->
 
-                                                                <div class="form-group alert-up-pd">
+                                                                <!-- <div class="form-group alert-up-pd">
                                                                     <div class=" col-md-6 col-sm-6 col-xs-12">
                                                                         <div class="student-inner-std res-mg-b-30">
                                                                             <div class="student-img">
                                                                                   <?php
-                                                                                  //Mostrando logo
-                                                                                  $queryImg="SELECT idEmpresa, logoEmpresa from empresa where idEmpresa = '1'";
-                                                                                  $resultado=mysqli_query($conexionbd,$queryImg);
-                                                                                  while ($data=mysqli_fetch_array($resultado))
-                                                                                      {
-                                                                                        $idEmpresa = $data['idEmpresa'];
-                                                                                        $logoEmpresa = $data['logoEmpresa'];
-                                                                                        }
+                                                                                  // //Mostrando logo
+                                                                                  // $queryImg="SELECT idEmpresa, logoEmpresa from empresa where idEmpresa = '1'";
+                                                                                  // $resultado=mysqli_query($conexionbd,$queryImg);
+                                                                                  // while ($data=mysqli_fetch_array($resultado))
+                                                                                  //     {
+                                                                                  //       $idEmpresa = $data['idEmpresa'];
+                                                                                  //       $logoEmpresa = $data['logoEmpresa'];
+                                                                                  //       }
                                                                                   ?>
                                                                                 <img src="data:image/jpg;base64,<?php echo base64_encode($logoEmpresa) ?>" alt="" />
                                                                             </div>
@@ -456,7 +457,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div> -->
                                                                 <br>
                                                                 
                                                             </div>
@@ -466,7 +467,7 @@
                                                             <div class="col-lg-12">
                                                                 <div class="payment-adress">
                                                                     <input type='submit' class="btn btn-primary waves-effect waves-light"   value="Guardar Usuario" name="guardarUsuario" id="guardarUsuario"></input>
-                                                                    <button type="" class="btn btn-primary waves-effect waves-light">Actualizar Logo</button>
+                                                                    <!-- <button type="" class="btn btn-primary waves-effect waves-light">Actualizar Logo</button> -->
                                                                 </div>
                                                             </div>
                                                         </div>

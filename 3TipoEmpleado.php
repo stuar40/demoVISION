@@ -1,9 +1,9 @@
 <?php
-   include('login/session.php');
+session_start();
+
    include('menus/menuizq.php');
    include("config/testconexion.php");
    
-
 
 
 

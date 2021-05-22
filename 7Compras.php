@@ -325,7 +325,7 @@
                                     
                                     <div class="panel panel-success" id="panel-cobro">
                                         <div class=" modal-header header-color-modal bg-color-2 panel-heading">
-                                          <h6 class="panel-title"></h6><h1 id="big_total"  name ="big_total" class="modal-header header-color-modal bg-color-2 text-center text-black">TOTAL Q 23.20</h1>
+                                          <h6 class="panel-title"></h6><h1 id="big_total"  name ="big_total" class="modal-header header-color-modal bg-color-2 text-center text-black">TOTAL Q 00.00</h1>
                                         </div>
 
                                         <div class="panel-body">

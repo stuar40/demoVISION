@@ -124,7 +124,7 @@
                                                                                     <div class="col-lg-6">
                                                                                         <div class="form-group-inner">
                                                                                                 <label>Stock Minimo</label>
-                                                                                                <input type="text" name="stockMinProducto" id="stockMinProducto"  class="form-control form__input" required
+                                                                                                <input type="text" value="1"name="stockMinProducto" id="stockMinProducto"  class="form-control form__input" required
                                                                                                 minlength="1" maxlength="9"
                                                                                                 pattern="[0-9]{1,9}"  title="SKU Tamaño mínimo: 1. Tamaño máximo: 9"
                                                                                                 placeholder="Ingrese STOK Minimo para Alertar">
@@ -196,7 +196,7 @@
                                                                                         <div class="form-group-inner">
                                                                                                 <label>Imagen Cargada</label>
                                                                                                 <div class="">
-                                                                                                    <a href="#"><img src="img/courses/1.jpg" alt=""></a>
+                                                                                                    <a href="#"><img src="img/Aros/Lentes.jpg" alt=""></a>
                                                                                                 </div>
                                                                                                 
                                                                                         </div>
