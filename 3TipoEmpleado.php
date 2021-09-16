@@ -240,7 +240,7 @@ session_start();
                                                 
                                                 <tbody>
                                                   <?php 
-                                                  $query_select = mysqli_query($conexionbd,"SELECT *  FROM tipoempleado ");
+                                                  $query_select = mysqli_query($conexionbd,"SELECT *  FROM tipoempleado");
                                                   $num_rows = mysqli_num_rows($query_select);
                                                   ?>
                                                   <?php

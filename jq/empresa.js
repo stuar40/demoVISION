@@ -106,6 +106,16 @@ $("#infoEmpresa").submit(function( event ) { //
   event.preventDefault();
 }) 
 //************************************* */
+
+$("#btnsesionUsuario").click(function(){
+
+  var value = "<?php echo $_SESSION['key']; ?>";
+    console.log(value);
+
+  var nombreJS = "<?php echo $NombredeUsuario; ?>";
+  $("#sesionUsuario").val(nombreJS); //al cl
+  console.log(nombreJS);
+});
   ///////////////////////////////////////////
     
 

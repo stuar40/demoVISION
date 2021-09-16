@@ -1,4 +1,13 @@
-
+<?php
+    //session_start();
+    //include('login/session.php');
+    if(!isset($_SESSION['id'])){
+        header("location:index.php");
+        die();
+    }
+  
+   //include('menus/menusup.php');
+?>
     <div class="header-advance-area">
              <!-- Menu Superior -->
             <div class="header-top-area">
@@ -38,11 +47,8 @@
                                     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                         <div class="header-right-info">
                                             <ul class="nav navbar-nav mai-top-nav header-right-menu">
-                                                <li class="nav-item dropdown">
-                                                    <a href="index-2.html" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-message edu-chat-pro" aria-hidden="true"></i><span class="indicator-ms"></span></a>
-                                                    
-                                                </li>
-                                                <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-bell" aria-hidden="true"></i><span class="indicator-nt"></span></a>
+                                                
+                                                <!-- <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-bell" aria-hidden="true"></i><span class="indicator-nt"></span></a>
                                                     <div role="menu" class="notification-author dropdown-menu animated zoomIn">
                                                         <div class="notification-single-top">
                                                             <h1>Notifications</h1>
@@ -62,28 +68,24 @@
                                                                     </div>
                                                                 </a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <div class="notification-icon">
-                                                                        <i class="fa fa-line-chart edu-analytics-arrow" aria-hidden="true"></i>
-                                                                    </div>
-                                                                    <div class="notification-content">
-                                                                        <span class="notification-date">16 Sept</span>
-                                                                        <h2>Victor Jara</h2>
-                                                                        <p>Please done this project as soon possible.</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
                                                         </ul>
                                                         <div class="notification-view">
                                                             <a href="#">View All Notification</a>
                                                         </div>
                                                     </div>
+                                                </li> -->
+                                                <li class="nav-item ">
+                                                    
+                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                                                            <img src="img/logoIcono.png" alt="" />
+															<span class="admin-name">S: <?php  echo $_SESSION['ciudadSucursal']; ?></span>
+															
+														</a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
 															<img src="img/product/pro4.jpg" alt="" />
-															<span class="admin-name">Prof.Anderson</span>
+															<span class="admin-name"><?php  echo $_SESSION['id'];?>  <?php echo $_SESSION["name"]; ?></span>
 															<i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
 														</a>
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
@@ -97,6 +99,7 @@
                                                         </li>
                                                     </ul>
                                                 </li>
+                                                
                                                 <li class="nav-item nav-setting-open"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-menu"></i></a>
 
                                                     <div role="menu" class="admintab-wrap menu-setting-wrap menu-setting-wrap-bg dropdown-menu animated zoomIn">

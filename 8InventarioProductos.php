@@ -2,7 +2,7 @@
    session_start();
    //include('login/session.php');
    include('menus/menuizq.php');
-   include("config/conexion.php");
+   include("config/testconexion.php");
    
 
 
@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Proveedores | MacroVision</title>
+    <title>Productos | MacroVision</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
@@ -118,19 +118,19 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-payment-inner-st">
                             <ul id="myTabedu1" class="tab-review-design">
-                                <li class="active"><a href="#description">Proveedores</a></li>
+                                <li class="active"><a href="#description">PRODUCTOS</a></li>
                                 
                                 
                             </ul>
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 
-                            <form class="form-horizontal" method="post" id="formProveedores" name="formProveedores"><!-- le asigna un identificador al formulario para generar un post y enviar los datos  -->
+                            <form class="form-horizontal" method="post" id="formProductos" name="formProductos"><!-- le asigna un identificador al formulario para generar un post y enviar los datos  -->
                                  
                       
                                   <!-- Step Form Content -->
                                   <div id="stepFormContent">
                                     <!-- Customer Info -->
-                                    <div id="bloqueMantSueldo" class="active"> <!-- asigna un id al bloque donde estan los campos de nuevo asesor proveedor-->
+                                    <div id="bloqueProductos" class="active"> <!-- asigna un id al bloque donde estan los campos de nuevo asesor proveedor-->
                                       
                                       <!-- Billing Form -->
                                       <div class="row">
@@ -138,12 +138,12 @@
                                           <!-- Input primer bloque donde selecciona el proveedor al cual asignara el asesor que se ingreseara-->
                                           <div class="js-form-message mb-6">
                                               <label class="main-sparkline12-hd">  <!-- etiqueta del campo de texto  donde se almacena el nombre comercial del proveedor -->
-                                                PROVEEDORES
+                                                Productos
                                                 
                                               </label>
                       
                                               <div class="js-focus-state input-group form">
-                                              <button type="button" class="btn btn-custon-rounded-three btn-primary" name="verProveedore" id="verProveedore">Ver Proveedores</button>
+                                              <button type="button" class="btn btn-custon-rounded-three btn-primary" name="verProductos" id="verProductos">Ver Productos</button>
                                               </div>
                                           </div>
                                           <!-- End Input -->
@@ -152,12 +152,12 @@
                                           <!-- Input primer bloque donde selecciona el proveedor al cual asignara el asesor que se ingreseara-->
                                           <div class="js-form-message mb-6">
                                               <label class="main-sparkline12-hd">  <!-- etiqueta del campo de texto  donde se almacena el nombre comercial del proveedor -->
-                                                ASESORES
+                                                Categorias
                                                 
                                               </label>
                       
                                               <div class="js-focus-state input-group form">
-                                              <button type="button" class="btn btn-custon-rounded-two btn-primary" name="verAsesores" id="verAsesores">Ver Asesores</button>
+                                              <button type="button" class="btn btn-custon-rounded-two btn-primary" name="verCategorias" id="verCategorias">Ver Categorias</button>
                                               </div>
                                           </div>
                                           <!-- End Input -->
@@ -168,7 +168,7 @@
                                       </div>
 
                                       <!-- BLOQUE donde esta la tabla de sueldo  -->
-                                      <div class="row" id="divProveedores" style="display: block">
+                                      <div class="row" id="divProductos" style="display: block">
                                           <div id="myTabContent" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 responsive-mode tab-content-center table-responsive-md justify-center" >
                                               <!-- Billing Form -->
                                               <div class="row">
@@ -176,31 +176,33 @@
                                                   <!-- Input primer bloque donde selecciona el proveedor al cual asignara el asesor que se ingreseara-->
                                                   <div class="js-form-message mb-6">
                                                       <label class="h6 small d-block text-uppercase">  <!-- etiqueta del campo de texto  donde se almacena el nombre comercial del proveedor -->
-                                                        Nuevo Proveedor
+                                                        Nuevo Producto
                                                         <span class="text-danger">*</span>
                                                       </label>
                               
                                                       <div class="js-focus-state input-group form">
-                                                      <button type="button" class="btn btn-custon-rounded-three btn-success" name="nuevoProveedor" id="nuevoProveedor">(+) Nuevo Proveedor</button>
+                                                      <button type="button" class="btn btn-custon-rounded-three btn-success" name="nuevoProducto" id="nuevoProducto">(+) Nuevo Producto</button>
                                                       </div>
                                                   </div>
                                                   <!-- End Input -->
                                                 </div>
                                               </div>
                                               <br>
-                                             <table class="table  table-condensed table-hover table-responsive-md  justify-center " id="tablaProveedores">
+                                             <table class="table  table-condensed table-hover table-responsive-md  justify-center " id="tablaProductos">
                                                 <thead >
                                                     <tr class="bgcolor btn-facebook">									
+                                                        <th class="text-center">ID</th>
                                                         <th class="text-center">Codigo</th>
-                                                        <th class="text-center">Proveedor</th>
-                                                        <th class="text-center">Telefono</th>
+                                                        <th class="text-center">Producto</th>
+                                                        <th class="text-center">Presentacion</th>
+                                                        <th class="text-center">Estado</th>
                                                         <th class="text-center">Acciones</th>
                                                       </tr>
                                                 </thead>
                                                 
                                                 <tbody>
                                                   <?php 
-                                                  $query_select = mysqli_query($conexionbd,"SELECT * FROM proveedor;");
+                                                  $query_select = mysqli_query($conexionbd,"SELECT * FROM producto;");
                                                   $num_rows = mysqli_num_rows($query_select);
                                                   ?>
                                                   <?php
@@ -213,10 +215,11 @@
                                                       ?>          
                                                             
                                                               <tr>
-                                                              <td class="text-center"><?php echo $row['idProveedor']?></td>
-                                                              <td class="text-center"><?php echo $row['nombreProveedor']?></td>
-                                                              <td class="text-center"><?php echo $row['telefonoProveedor']?></td>
-                                                              
+                                                              <td class="text-center"><?php echo $row['idProducto']?></td>
+                                                              <td class="text-center"><?php echo $row['skuProducto']?></td>
+                                                              <td class="text-center"><?php echo $row['nombreProducto']?></td>
+                                                              <td class="text-center"><?php echo $row['presentacionProducto']?></td>
+                                                              <td class="text-center"><?php echo $row['estadoProducto']?></td>
                                                               <td class="text-center"> </td>
                                                               </tr>
                                                       <?php }
@@ -229,7 +232,7 @@
                                             </div>                                  
                                       </div>
                                       <!-- BLOQUE donde esta la tabla de Comision  -->
-                                        <div class="row" id="divAsesores" style="display: none">
+                                        <div class="row" id="divCategorias" style="display: none">
                                           <div id="myTabContent" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 responsive-mode tab-content-center table-responsive-md justify-center" >
                                             <!-- Billing Form -->
                                             <div class="row">
@@ -237,12 +240,12 @@
                                                   <!-- Input primer bloque donde selecciona el proveedor al cual asignara el asesor que se ingreseara-->
                                                   <div class="js-form-message mb-6">
                                                       <label class="h6 small d-block text-uppercase">  <!-- etiqueta del campo de texto  donde se almacena el nombre comercial del proveedor -->
-                                                        Nuevo Asesor
+                                                        Nueva Categoria
                                                         <span class="text-danger">*</span>
                                                       </label>
                               
                                                       <div class="js-focus-state input-group form">
-                                                      <button type="button" class="btn btn-custon-rounded-three btn-danger" name="nuevoAsesor" id="nuevoAsesor">(+) Nuevo Asesor</button>
+                                                      <button type="button" class="btn btn-custon-rounded-three btn-danger" name="nuevaCategoria" id="nuevaCategoria">(+) Nueva Categoria</button>
                                                       </div>
                                                   </div>
                                                   <!-- End Input -->
@@ -250,15 +253,12 @@
                                               </div>
                                                
                                             <br>
-                                            <table class="table  table-condensed table-hover table-responsive-md  justify-center " id="tablaAsesorProveedor">
+                                            <table class="table  table-condensed table-hover table-responsive-md  justify-center " id="tablaCategorias">
                                                 <thead >
                                                     <tr class="bgcolor btn-facebook">									
                                                       
                                                         <th class="text-center">Codigo</th>
-                                                        <th class="text-center">Asesor</th>
-                                                        <th class="text-center">Telefono</th>
-                                                        <th class="text-center">Proveedor</th>
-                                                        <th class="text-center">Estado</th>
+                                                        <th class="text-center">Categoria</th>
                                                         <th class="text-center">Acciones</th>
                                                       
                                                     </tr>
@@ -266,7 +266,7 @@
                                                 
                                                 <tbody>
                                                   <?php 
-                                                  $query_select = mysqli_query($conexionbd,"SELECT idAsesor,nombreAsesor,telefonoAsesor,estadoAsesor, nombreProveedor FROM asesor inner join proveedor on asesor.Proveedor_idProveedor=proveedor.idProveedor");
+                                                  $query_select = mysqli_query($conexionbd,"SELECT * from categoria");
                                                   $num_rows = mysqli_num_rows($query_select);
                                                   ?>
                                                   <?php
@@ -279,11 +279,9 @@
                                                       ?>          
                                                             
                                                               <tr>
-                                                              <td class="text-center"><?php echo $row['idAsesor']?></td>
-                                                              <td class="text-center"><?php echo $row['nombreAsesor']?></td>
-                                                              <td class="text-center"><?php echo $row['telefonoAsesor']?></td>
-                                                              <td class="text-center"><?php echo $row['nombreProveedor']?></td>
-                                                              <td class="text-center"><?php echo $row['estadoAsesor']?></td>
+                                                              <td class="text-center"><?php echo $row['idCategoria']?></td>
+                                                              <td class="text-center"><?php echo $row['nombreCategoria']?></td>
+                                                              
                                                               <td class="text-center"> </td>
                                                               </tr>
                                                       <?php }
@@ -322,7 +320,7 @@
        <!-- ========== LLama a ventanas Modales ========== -->
         <?php
             //  include("modal/modalprueba.php") ; // modal que permite Guardar el usuario
-             include("modal/modal6Proveedores.php") ;// modal que permite Guardar el usuario
+             include("modal/modal8Productos.php") ;// modal que permite Guardar el usuario
         ?>
 
     </div>
@@ -331,7 +329,7 @@
      <!-- Aqui se llaman a los archivos jquery con la funcion ready para poder ejecutar los archivos ajax  -->
     <!-- <script src="js/vendor/jquery-1.12.4.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="jq/6Proveedores.js">  </script> 
+    <script type="text/javascript" src="jq/8Productos.js">  </script> 
  
     <!-- bootstrap JS
 		============================================ -->

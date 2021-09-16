@@ -41,28 +41,27 @@
    // }
 
 
-
+////PARTE3
    //session_start();
    if(!isset($_SESSION)){
       session_start();
      }
-if (!isset($_SESSION['user_login_status']) AND $_SESSION['user_login_status'] != 1) {
+if (!isset($_SESSION['id']) ) {
    echo '<script type="text/javascript">window.location.href="index.php";</script>';   
   // header("location: ../index.php");
   exit;
       }
       
-      if (isset($_SESSION['user_login_status']) AND $_SESSION['user_login_status'] == 1
-      AND $_SESSION['roles_id'] == '1') {
+      if (isset($_SESSION['id']) AND $_SESSION['tipoEmpleado'] == 1) {
          echo '<script type="text/javascript">window.location.href="principal.php";</script>';
       //  header("location: ./principal.php");
     exit;
         }
 
 
-        if (isset($_SESSION['user_login_status']) AND $_SESSION['user_login_status'] == 1
-        AND $_SESSION['roles_id'] == '2') {
-         echo '<script type="text/javascript">window.location.href="principal.php";</script>';
+        if (isset($_SESSION['id']) AND $_SESSION['tipoEmpleado'] == 2) {
+         //echo '<script type="text/javascript">window.location.href="principal3.php";</script>';
+       //  header("location:./principal3.php");
       exit;
           }
 

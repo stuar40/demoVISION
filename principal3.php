@@ -1,10 +1,13 @@
 <?php
-    session_start();
-    //include('login/session.php');
-    if(!isset($_SESSION['id'])){
+   session_start();
+   
+  // include('login/session.php');
+   if(!isset($_SESSION['id'])){
         header("location:index.php");
         die();
     }
+
+
    include('menus/menuizq.php');
    //include('menus/menusup.php');
 ?>
@@ -73,6 +76,9 @@
 </head>
 
 <body>
+<?php
+if($_SESSION["name"]) {
+?>
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -108,15 +114,20 @@
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
                             <div class="panel-body">
                                 <div class="text-center content-box">
-                                    <h2 class="m-b-xs"> USUARIOS </h2>
+                                    <h2 class="m-b-xs"> USUARIOS Nombre:<?php echo $_SESSION["name"]; ?>  </h2>
+                                    <h2 class="m-b-xs"> Tipo Empleado Nombre:<?php echo $_SESSION["tipoEmpleado"]; ?>  </h2>
+                                    <h2 class="m-b-xs"> ID Empleado Usuario:<?php echo $_SESSION["id"]; ?>  </h2>
+                                    <input name="sesionUsuario" id="sesionUsuario" type="text" class="form-control " value="<?php echo $_SESSION["id"]; ?>"data-msg="Contraseña Usuario." >
                                     <p class="font-bold text-success">Registro de Usuario</p>
+                                    <button type="" class="btn btn-primary waves-effect waves-light" name="btnsesionUsuario" id="btnsesionUsuario" >Ver Usuario Sesion</button>
                                     <div class="m icon-box">
                                         <i class="educate-icon educate-star-half"></i>
                                     </div>
                                     <p class="small mg-t-box">
                                         Usted podra registrar usuarios para el uso del Sistema
                                     </p>
-                                    <button class="btn btn-success widget-btn-1 btn-sm" onclick="window.location.href='5VerUsuario.php'">ir a Usuario</button>
+                                    <!-- <button class="btn btn-success widget-btn-1 btn-sm" onclick="window.location.href='5VerUsuario.php'" >ir a Usuario</button> -->
+                                    <button class="btn btn-success widget-btn-1 btn-sm" name="insertUsuario" id="insertUsuario">ir a Usuario</button>
                                 </div>
                             </div>
                         </div>
@@ -214,7 +225,7 @@
                                 <div class="text-center content-bg-pro">
                                     <h3>Usuario</h3>
                                     <p class="text-big font-light">
-                                    <?php echo $_SESSION['name'];?>
+                                        Begama
                                     </p>
                                     <small>
 												Usuario actual del Sistema
@@ -363,7 +374,59 @@
         ?>
         
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="jq/empresa.js">  </script>  -->
+    
+    
+    <script type="text/javascript">
+    
+    
 
+
+    $("#insertUsuario").click(function(){
+    
+            nombreUsuario = $.trim($("#sesionUsuario").val()); 
+            
+            action = "insertarSesion";
+
+
+
+            $.ajax({ //aqui se indica que vamos a hacer con los datos obtenidos del formulario
+                    type: "POST",
+                    url: "ajax/ajaxLogin.php", //indica el Ajax donde se procesara los parametros enviados 
+                    //data: parametros,
+                    data: {action:action,
+                           nombreUsuario:nombreUsuario
+                          
+                         },
+                    dataType: 'json', //indica que el valor que devuelve el ajax es json para poder manipular en js
+                    beforeSend: function(objeto){},
+                    success: function(data2){
+                    
+                    
+                      if(data2 == 'error'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
+                            Swal.fire({
+                            title: "Error Usuario Incorrecto", //titulo del modal
+                            icon: 'error', //tipo de advertencia modal
+                            });
+                            console.log("rechazado");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
+                          }
+                  
+                    else if(data2 == 'successful') // en caso de ser actualizado la respuesta del ajaxProveedor entonces la opcion completada fue un UPDATE en la BD
+                    {
+                      Swal.fire({
+                        title: "Usuario:"+data2+"  Bienvenido",
+                        icon: 'success',
+                        timer: 2000   
+                        }).then(function() {
+                         // window.location = "principal3.php";
+                        });
+                    }
+                      
+                }
+          });
+    });
+    </script>
     <!-- jquery
 		============================================ -->
     <script src="js/vendor/jquery-1.12.4.min.js"></script>
@@ -417,7 +480,10 @@
     <!-- main JS
 		============================================ -->
     <script src="js/main.js"></script>
-   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <?php
+}else echo "<h1>Please login first .</h1>";
+?>
 </body>
 
 </html>

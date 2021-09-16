@@ -1,7 +1,32 @@
 <?php    
 
-?>
+ 
+  //   $message="";
+  //   if(count($_POST)>0) {
+  //     include('config/conexion.php'); // Estableciendo la conexion a la base de datos
+  //     //  $con = mysqli_connect('75.102.22.187','oonigyuo_estuardo','Eddy5795.','oonigyuo_testoptica') or die('Unable To connect');
+  //      // $result = mysqli_query($con,"SELECT * FROM usuario WHERE usuario='" . $_POST["username"] . "' and passUsuario = '". $_POST["password"]."'");
+  //      session_start();
+  //      $result = mysqli_query($conexionbd,"SELECT * FROM usuario WHERE usuario='" . $_POST["username"] . "' and passUsuario = '". $_POST["password"]."'");
+  //       $row  = mysqli_fetch_array($result);
+  //       if(is_array($row)) {
+  //       $_SESSION["id"] = $row['idUsuario'];
+  //       $_SESSION["name"] = $row['usuario'];
+  //       $_SESSION["tipoEmpleado"] = $row['TipoEmpleado_idTipoEmpleado'];
+  //       } else {
+  //        $message = "Invalid Username or Password!";
+  //       }
+  //   }
+  //   if(isset($_SESSION["id"])) {
+   
+  //  header("Location:principal3.php");
+  //   }
 
+
+  
+  
+
+?>
 <!doctype html>
 <html class="" lang="en">
 
@@ -78,7 +103,7 @@
 			<div class="content-error">
 				<div class="hpanel" > 
                     <div class="panel-body">
-                        <form action="" method = "post" id="loginForm">
+                        <form method = "post" action=""  id="loginForm">
                             <div class="form-group">
                                 <label class="control-label" for="username">Usuario</label>
                                 <input type="text"  title="Please enter you username" placeholder="Usuario" required="" value="" name="username" id="username" class="form-control">
@@ -94,9 +119,9 @@
 										            <input type="checkbox" class="i-checks"> Recordarme </label>
                                 
                             </div>
-                           
-                            <!-- <button name="login" id="login" type = "submit" class="btn btn-success btn-block loginbtn" style="color: #ffffff; background-color: #0cd5ac;border-color: #0cd5ac " >Login</button> -->
-                            <button name="loginbtn" id="loginbtn" type = "button" class="btn btn-success btn-block loginbtn" style="color: #ffffff; background-color: #0cd5ac;border-color: #0cd5ac " >Inciar Sesion</button>
+                           <input type="submit" name="submit" value="Submit">
+                            <button name="login" id="login" type = "submit" class="btn btn-success btn-block loginbtn" style="color: #ffffff; background-color: #0cd5ac;border-color: #0cd5ac " >Login</button>
+                            <button name="loginbtn" id="loginbtn" type = "button" class="btn btn-success btn-block loginbtn" style="color: #ffffff; background-color: #0cd5ac;border-color: #0cd5ac " >LoginAlert</button>
                         </form>
                     </div>
                 </div>
@@ -134,7 +159,7 @@
                     
                       if(data2 == 'error'){ // en caso de que el valor de data2 que viene del ajaxProveedore sea replica es porque la comparacion con BD ya existia el dato y no se pudo ejecutar la consulta 
                             Swal.fire({
-                            title: "Error Usuario/Contraseña Incorrecto", //titulo del modal
+                            title: "Error Usuario Incorrecto", //titulo del modal
                             icon: 'error', //tipo de advertencia modal
                             });
                             console.log("rechazado");   // // imprime en consola para el desarrolador ver el valro que esta obteniendo 
@@ -143,11 +168,11 @@
                     else if(data2 == nombreUsuario) // en caso de ser actualizado la respuesta del ajaxProveedor entonces la opcion completada fue un UPDATE en la BD
                     {
                       Swal.fire({
-                        title: "Bienvenido: "+data2,
+                        title: "Usuario:"+data2+"  Bienvenido",
                         icon: 'success',
                         timer: 2000   
                         }).then(function() {
-                          window.location = "principal.php";
+                          window.location = "principal3.php";
                         });
                     }
                       

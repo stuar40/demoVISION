@@ -122,7 +122,7 @@
                         <div class="product-payment-inner-st res-mg-t-30 analysis-progrebar-ctn">
                             <ul id="myTabedu1" class="tab-review-design">
                                 
-                                <li class="active"><a href="#reviews"> DETALLES DE COMPRA</a></li>
+                                <li class="active"><a href="#reviews"> DETALLES DE Venta</a></li>
                                 
                             </ul>
                             <div id="myTabContent" class="tab-content custom-product-edit">
@@ -196,6 +196,7 @@
                                                         </div>
                                                         <div class="ex-pro">
                                                             <div class="row">
+                                                            
                                                                   <div class="col-lg-8">
                                                                       <div class="form-group-inner">
                                                                           <label>Buscar Producto</label><br>
@@ -351,7 +352,7 @@
                                                                                 <div class="row">
                                                                                     <div class="col-lg-12">
                                                                                         <div class="form-group-inner">
-                                                                                            <label >Proveedor</label>
+                                                                                            <label >Cliente</label>
                                                                                               <div class="input-group custom-go-button">
                                                                                                 <select name="id_Proveedor" id="id_Proveedor" class="form-control" required>
                                                                                                 <?php
@@ -366,7 +367,7 @@
                                                                                                             <option value="<?php echo $dato1; ?>"> <?php echo $dato2; ?>  </option>
                                                                                                 <?php 	} ?>
                                                                                                 </select> <!-- se asignan identificadores y detalles al campo de texto de la descripcion del proveedor -->
-                                                                                                <span class="input-group-btn"><button type="button" name ="nuevoProveedor"id="nuevoProveedor" class="btn btn-success">Nuevo</button></span>
+                                                                                                <span class="input-group-btn"><button type="button" name ="nuevoProveedor"id="nuevoProveedor" class="btn btn-success">Ver</button></span>
                                                                                                 
                                                                                               </div>
                                                                                         </div>
@@ -380,7 +381,7 @@
                                                                                 <div class="row">
                                                                                     <div class="col-lg-6">
                                                                                         <div class="form-group-inner">
-                                                                                                <label>Tipo Doc</label>
+                                                                                                <label>Tipo Documento</label>
                                                                                                 <select name="tipoDocCompra" id="tipoDocCompra" class="form-control" required>
                                                                                                 
                                                                                                             <option value="FACTURA"> FACTURA </option>
@@ -417,7 +418,7 @@
                                                                                     </div>
                                                                                     <div class="col-lg-6">
                                                                                         <div class="form-group-inner">
-                                                                                                <label>No. Comprobante</label>
+                                                                                                <label>No. Documento</label>
                                                                                                 <input type="text" name="noComprobanteCompra" id="noComprobanteCompra"  class="form-control form__input" 
                                                                                                 placeholder="#0001"
                                                                                                 data-msg="No. Comprobante"

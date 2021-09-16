@@ -1,4 +1,6 @@
 ##### Cargar tipo Empleado
+DELIMITER $$
+
 CREATE   PROCEDURE `cargarTipoEmpleado`(IN nombreTipoEmpleado VARCHAR(45),IN descripcion VARCHAR(75),IN privilegioGrupo int)
 BEGIN
      DECLARE nuevoID INT;
@@ -52,7 +54,8 @@ BEGIN
     end case;
     
     
-END
+END  $$
+DELIMITER $$
 
 
 
@@ -64,7 +67,7 @@ BEGIN
   SELECT tmp.idtmp_Detalles, tmp.tmp_TipoMovimiento,tmp.tmp_codProducto,
 		p.skuProducto,p.nombreProducto,tmp.tmp_cantidad,
         tmp.tmp_precio 
-        FROM ssolucionesgt_testopticas.tmp_Detalles tmp 
+        FROM tmp_Detalles tmp 
         inner join producto p on tmp.tmp_codProducto=p.idProducto 
         where tmp.tmp_tknUsuario = varUsuario and tmp.tmp_TipoMovimiento = 'COMPRA' ;
     	
@@ -108,7 +111,7 @@ BEGIN
 	SELECT tmp.idtmp_Detalles, tmp.tmp_TipoMovimiento,tmp.tmp_codProducto,
 		p.skuProducto,p.nombreProducto,tmp.tmp_cantidad,
         tmp.tmp_precio 
-        FROM ssolucionesgt_testopticas.tmp_Detalles tmp 
+        FROM tmp_Detalles tmp 
         inner join producto p on tmp.tmp_codProducto=p.idProducto 
         where tmp.tmp_tknUsuario = varUsuario and tmp.tmp_TipoMovimiento = 'COMPRA' ;
     

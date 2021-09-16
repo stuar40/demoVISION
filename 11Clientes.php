@@ -1,8 +1,9 @@
 <?php
    session_start();
    //include('login/session.php');
+   include("config/testconexion.php");
    include('menus/menuizq.php');
-   include("config/conexion.php");
+  
    
 
 
@@ -15,7 +16,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Proveedores | MacroVision</title>
+    <title>Clientes | MacroVision</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
@@ -94,7 +95,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="logo-pro">
-                        <a href="index.html"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
+                        <a href="#"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
                     </div>
                 </div>
             </div>
@@ -118,19 +119,19 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-payment-inner-st">
                             <ul id="myTabedu1" class="tab-review-design">
-                                <li class="active"><a href="#description">Proveedores</a></li>
+                                <li class="active"><a href="#description">ADMINISTRAR CLIENTES</a></li>
                                 
                                 
                             </ul>
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 
-                            <form class="form-horizontal" method="post" id="formProveedores" name="formProveedores"><!-- le asigna un identificador al formulario para generar un post y enviar los datos  -->
+                            <form class="form-horizontal" method="post" id="formClientes" name="formClientes"><!-- le asigna un identificador al formulario para generar un post y enviar los datos  -->
                                  
                       
                                   <!-- Step Form Content -->
                                   <div id="stepFormContent">
                                     <!-- Customer Info -->
-                                    <div id="bloqueMantSueldo" class="active"> <!-- asigna un id al bloque donde estan los campos de nuevo asesor proveedor-->
+                                    <div id="bloqueClientes" class="active"> <!-- asigna un id al bloque donde estan los campos de nuevo Cliente proveedor-->
                                       
                                       <!-- Billing Form -->
                                       <div class="row">
@@ -138,37 +139,24 @@
                                           <!-- Input primer bloque donde selecciona el proveedor al cual asignara el asesor que se ingreseara-->
                                           <div class="js-form-message mb-6">
                                               <label class="main-sparkline12-hd">  <!-- etiqueta del campo de texto  donde se almacena el nombre comercial del proveedor -->
-                                                PROVEEDORES
+                                                Clientes
                                                 
                                               </label>
                       
                                               <div class="js-focus-state input-group form">
-                                              <button type="button" class="btn btn-custon-rounded-three btn-primary" name="verProveedore" id="verProveedore">Ver Proveedores</button>
+                                              <button type="button" class="btn btn-custon-rounded-three btn-primary" name="verClientes" id="verClientes">Ver Clientes</button>
                                               </div>
                                           </div>
                                           <!-- End Input -->
                                         </div>
-                                        <div class="col-md-6">
-                                          <!-- Input primer bloque donde selecciona el proveedor al cual asignara el asesor que se ingreseara-->
-                                          <div class="js-form-message mb-6">
-                                              <label class="main-sparkline12-hd">  <!-- etiqueta del campo de texto  donde se almacena el nombre comercial del proveedor -->
-                                                ASESORES
-                                                
-                                              </label>
-                      
-                                              <div class="js-focus-state input-group form">
-                                              <button type="button" class="btn btn-custon-rounded-two btn-primary" name="verAsesores" id="verAsesores">Ver Asesores</button>
-                                              </div>
-                                          </div>
-                                          <!-- End Input -->
-                                        </div>
+                                       
                                         
                                        
                       
                                       </div>
 
                                       <!-- BLOQUE donde esta la tabla de sueldo  -->
-                                      <div class="row" id="divProveedores" style="display: block">
+                                      <div class="row" id="divtodosClientes" style="display: block">
                                           <div id="myTabContent" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 responsive-mode tab-content-center table-responsive-md justify-center" >
                                               <!-- Billing Form -->
                                               <div class="row">
@@ -176,31 +164,33 @@
                                                   <!-- Input primer bloque donde selecciona el proveedor al cual asignara el asesor que se ingreseara-->
                                                   <div class="js-form-message mb-6">
                                                       <label class="h6 small d-block text-uppercase">  <!-- etiqueta del campo de texto  donde se almacena el nombre comercial del proveedor -->
-                                                        Nuevo Proveedor
+                                                        Nuevo Cliente
                                                         <span class="text-danger">*</span>
                                                       </label>
                               
                                                       <div class="js-focus-state input-group form">
-                                                      <button type="button" class="btn btn-custon-rounded-three btn-success" name="nuevoProveedor" id="nuevoProveedor">(+) Nuevo Proveedor</button>
+                                                      <button type="button" class="btn btn-custon-rounded-three btn-success" name="nuevoCliente" id="nuevoCliente">(+) Nuevo Cliente</button>
                                                       </div>
                                                   </div>
                                                   <!-- End Input -->
                                                 </div>
                                               </div>
                                               <br>
-                                             <table class="table  table-condensed table-hover table-responsive-md  justify-center " id="tablaProveedores">
+                                             <table class="table  table-condensed table-hover table-responsive-md  justify-center " id="tablatodosClientes">
                                                 <thead >
                                                     <tr class="bgcolor btn-facebook">									
-                                                        <th class="text-center">Codigo</th>
-                                                        <th class="text-center">Proveedor</th>
+                                                        <th class="text-center">NIT</th>
+                                                        <th class="text-center">Cliente</th>
                                                         <th class="text-center">Telefono</th>
+                                                        <th class="text-center">Sexo</th>
+                                                        <th class="text-center">Estado</th>
                                                         <th class="text-center">Acciones</th>
                                                       </tr>
                                                 </thead>
                                                 
                                                 <tbody>
                                                   <?php 
-                                                  $query_select = mysqli_query($conexionbd,"SELECT * FROM proveedor;");
+                                                  $query_select = mysqli_query($conexionbd,"SELECT * FROM todos_Clientes;");
                                                   $num_rows = mysqli_num_rows($query_select);
                                                   ?>
                                                   <?php
@@ -213,10 +203,11 @@
                                                       ?>          
                                                             
                                                               <tr>
-                                                              <td class="text-center"><?php echo $row['idProveedor']?></td>
-                                                              <td class="text-center"><?php echo $row['nombreProveedor']?></td>
-                                                              <td class="text-center"><?php echo $row['telefonoProveedor']?></td>
-                                                              
+                                                              <td class="text-center"><?php echo $row['nitCliente']?></td>
+                                                              <td class="text-center"><?php echo $row['nombreCliente'];?> <?php  echo $row['apellidoCliente'];?></td>
+                                                              <td class="text-center"><?php echo $row['telefonoCliente']?></td>
+                                                              <td class="text-center"><?php echo $row['sexoCliente']?></td>
+                                                              <td class="text-center"><?php echo $row['estadoCliente']?></td>
                                                               <td class="text-center"> </td>
                                                               </tr>
                                                       <?php }
@@ -228,75 +219,7 @@
                                               </table>
                                             </div>                                  
                                       </div>
-                                      <!-- BLOQUE donde esta la tabla de Comision  -->
-                                        <div class="row" id="divAsesores" style="display: none">
-                                          <div id="myTabContent" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 responsive-mode tab-content-center table-responsive-md justify-center" >
-                                            <!-- Billing Form -->
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                  <!-- Input primer bloque donde selecciona el proveedor al cual asignara el asesor que se ingreseara-->
-                                                  <div class="js-form-message mb-6">
-                                                      <label class="h6 small d-block text-uppercase">  <!-- etiqueta del campo de texto  donde se almacena el nombre comercial del proveedor -->
-                                                        Nuevo Asesor
-                                                        <span class="text-danger">*</span>
-                                                      </label>
-                              
-                                                      <div class="js-focus-state input-group form">
-                                                      <button type="button" class="btn btn-custon-rounded-three btn-danger" name="nuevoAsesor" id="nuevoAsesor">(+) Nuevo Asesor</button>
-                                                      </div>
-                                                  </div>
-                                                  <!-- End Input -->
-                                                </div>
-                                              </div>
-                                               
-                                            <br>
-                                            <table class="table  table-condensed table-hover table-responsive-md  justify-center " id="tablaAsesorProveedor">
-                                                <thead >
-                                                    <tr class="bgcolor btn-facebook">									
-                                                      
-                                                        <th class="text-center">Codigo</th>
-                                                        <th class="text-center">Asesor</th>
-                                                        <th class="text-center">Telefono</th>
-                                                        <th class="text-center">Proveedor</th>
-                                                        <th class="text-center">Estado</th>
-                                                        <th class="text-center">Acciones</th>
-                                                      
-                                                    </tr>
-                                                </thead>
-                                                
-                                                <tbody>
-                                                  <?php 
-                                                  $query_select = mysqli_query($conexionbd,"SELECT idAsesor,nombreAsesor,telefonoAsesor,estadoAsesor, nombreProveedor FROM asesor inner join proveedor on asesor.Proveedor_idProveedor=proveedor.idProveedor");
-                                                  $num_rows = mysqli_num_rows($query_select);
-                                                  ?>
-                                                  <?php
-                                                    if ($num_rows > 0) {
-                                                          # code...
-                                                          $htmlTable = '';
-                                                          while ($row = mysqli_fetch_assoc($query_select)) {
-                                                          $htmlTable = '';
-                                                        
-                                                      ?>          
-                                                            
-                                                              <tr>
-                                                              <td class="text-center"><?php echo $row['idAsesor']?></td>
-                                                              <td class="text-center"><?php echo $row['nombreAsesor']?></td>
-                                                              <td class="text-center"><?php echo $row['telefonoAsesor']?></td>
-                                                              <td class="text-center"><?php echo $row['nombreProveedor']?></td>
-                                                              <td class="text-center"><?php echo $row['estadoAsesor']?></td>
-                                                              <td class="text-center"> </td>
-                                                              </tr>
-                                                      <?php }
-                                                      }else{
-                                                          echo "notData";
-                                                      } 
-                                                    ?>
-                                                </tbody>
-                                              </table>
-                                            </div>                                  
-                                        </div>
-                                     
-                                  <!-- FIN DE los BLoques -->
+                                  
                                    </div>
                                 </div>
                                   
@@ -321,8 +244,8 @@
        ?>
        <!-- ========== LLama a ventanas Modales ========== -->
         <?php
-            //  include("modal/modalprueba.php") ; // modal que permite Guardar el usuario
-             include("modal/modal6Proveedores.php") ;// modal que permite Guardar el usuario
+            
+             include("modal/modal11Clientes.php") ;// modal que permite Guardar el usuario
         ?>
 
     </div>
@@ -331,7 +254,7 @@
      <!-- Aqui se llaman a los archivos jquery con la funcion ready para poder ejecutar los archivos ajax  -->
     <!-- <script src="js/vendor/jquery-1.12.4.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="jq/6Proveedores.js">  </script> 
+    <script type="text/javascript" src="jq/11Clientes.js">  </script> 
  
     <!-- bootstrap JS
 		============================================ -->
